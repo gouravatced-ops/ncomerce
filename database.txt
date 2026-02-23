@@ -1,0 +1,1688 @@
+My tought =>Give full structure of ecommerce companies like give gaints database structure like banner manage , hero section manage , banner and hero size whise manage like for grid system also festival time new banner with button link description like too good , phir product ki categories ko define karna jo mene teen mene beje hai wese ish trah ka structure user multiple address in single account otp based login user add to card , wishlist , checkout out with fully secure also user ke product jo dikhte usse hissab se phir agar user same platform pe uske search ke hissab se dikhana its too good toh mujhe ist thr ki design chiaye , like product ho jisse color varient hota option , mobile ka specifiaction ek variant option hota hai and size option hota hai dress mein , men wear mein yah koi dress mein summer according categires , like jeans brand , which color jeans , size of jeans customer rating ke hissab mobile type ke hissab 5g for 4g filteration ear buds ke hissab se kis type ear buds yeh yeh sab user ki hr eactivity ko track phir user again plant form pe visit kare usse uske search and activity ke hissab se product aur product categories ko randomnize karna , mere proeject ek aur chiz important hogi like yeh ek aisa jisma used mein ki customer ko furniture ke liye ecommerce toh kewal futniture wala pura ecommerce ho jaayega and agar kewa dress wlaa hai toh usk trah agar koi sab kuch default all hr trah ka product hai like ek product ke ke images multiple , variant , size , review comment , specification , brand details which brand conetced this product and how much warrnety year every brand product acording every produch hai share link like that toh mujhe iske according database structure chiaye ek system design ke hissab joo server load na de aur fetch product karne time compplexicity naa aaye
+
+Complete E-Commerce System Architecture & Database Design
+
+I would like a comprehensive system design and database architecture for a scalable, enterprise-level e-commerce platform similar to large marketplace companies.
+
+The system should be designed with performance optimization, scalability, and minimal server load in mind, ensuring efficient product fetching without high query complexity.
+
+1. CMS & Frontend Content Management Structure
+
+The system must include a flexible CMS structure for:
+
+Banner Management
+
+Multiple banners (homepage, category page, promotional banners)
+
+Festival-based banners (e.g., Diwali, Summer Sale, Black Friday)
+
+Button link support (CTA buttons)
+
+Banner description text
+
+Status management (active/inactive)
+
+Schedule-based publishing
+
+Hero Section Management
+
+Separate hero section configuration
+
+Grid-based layout management
+
+Image size-wise configuration (desktop, tablet, mobile)
+
+Festival-specific hero updates
+
+Dynamic Grid System
+
+Configurable grid layout for homepage and category sections
+
+Section-wise product blocks
+
+2. Product Management Structure
+
+The product architecture must support:
+
+Multiple product images
+
+Product variants:
+
+Color variants
+
+Size variants (e.g., dresses, men’s wear)
+
+Mobile storage variants
+
+Technical variants (e.g., 4G / 5G phones)
+
+Specifications (e.g., mobile technical details)
+
+Brand association
+
+Warranty information per product
+
+Customer ratings and reviews
+
+Review comments
+
+Shareable product links
+
+Example scenarios:
+
+Jeans: brand, color, size
+
+Mobiles: storage variant, 4G/5G filter
+
+Earbuds: type-based filtering
+
+Dresses: summer category, men’s wear, size filters
+
+3. Category & Filtering System
+
+The platform must support:
+
+Multi-level category hierarchy
+
+Category-wise filtering
+
+Dynamic filter options based on product type
+
+Brand-based filtering
+
+Rating-based filtering
+
+Variant-based filtering
+
+Feature-based filtering (e.g., 5G support)
+
+Filtering must be optimized for performance and avoid heavy query loads.
+
+4. User Account & Authentication
+
+The user system must include:
+
+OTP-based login
+
+Multiple addresses per user
+
+Add to cart
+
+Wishlist
+
+Secure checkout process
+
+Fully secure authentication and session handling
+
+5. Personalization & Activity Tracking
+
+The system must:
+
+Track user activity:
+
+Search history
+
+Viewed products
+
+Category browsing
+
+Wishlist actions
+
+Personalize product recommendations
+
+Show products based on previous searches
+
+Dynamically randomize product categories based on user interest
+
+Display intelligent recommendations when user revisits the platform
+
+6. Multi-Vertical / Multi-Domain Capability
+
+The architecture should support:
+
+Single niche e-commerce (e.g., furniture-only platform)
+
+Single-category vertical (e.g., fashion-only)
+
+Multi-category marketplace (all product types combined)
+
+The system must be flexible to switch between:
+
+Furniture-only store
+
+Dress-only store
+
+Full marketplace model
+
+7. Performance & Scalability Requirements
+
+The database and system design must:
+
+Avoid heavy joins and complex queries
+
+Optimize product fetch time
+
+Support high traffic
+
+Reduce server load
+
+Use indexing and caching strategies
+
+Be horizontally scalable
+
+Support large product inventory
+
+8. Required Deliverables
+
+I need:
+
+Full database schema design (tables & relationships)
+
+ER diagram explanation
+
+Scalable system architecture
+
+Recommended backend structure
+
+Query optimization strategy
+
+Caching & indexing approach
+
+Load balancing considerations
+
+Goal
+
+To build a scalable, secure, intelligent, and enterprise-level e-commerce platform with advanced personalization, dynamic filtering, and efficient database performance — similar to large global e-commerce companies.
+Comprehensive E-Commerce System Architecture & Database Design
+1. System Architecture Overview
+High-Level Architecture
+text
+┌─────────────────────────────────────────────────────────────────────┐
+│                         CLIENT LAYERS                                │
+│  Web App (React/Next.js)  │  Mobile App (iOS/Android)  │  PWA       │
+└─────────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                      CDN / EDGE NETWORK                              │
+│                   CloudFlare / AWS CloudFront                        │
+└─────────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                      LOAD BALANCER                                   │
+│                    AWS ALB / Nginx / HAProxy                         │
+└─────────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                     APPLICATION LAYER                                │
+│  ┌──────────────┐ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐│
+│  │   Auth       │ │   Product    │ │   Cart/Order │ │   CMS        ││
+│  │   Service    │ │   Service    │ │   Service    │ │   Service    ││
+│  └──────────────┘ └──────────────┘ └──────────────┘ └──────────────┘│
+│  ┌──────────────┐ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐│
+│  │   User       │ │  Search      │ │  Payment     │ │  Analytics   ││
+│  │   Service    │ │  Service     │ │  Service     │ │  Service     ││
+│  └──────────────┘ └──────────────┘ └──────────────┘ └──────────────┘│
+└─────────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                     CACHING LAYER                                    │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────────┐  │
+│  │   Redis Cluster │  │   Elasticsearch │  │   CDN Cache         │  │
+│  │   (Session,     │  │   (Search,       │  │   (Static Assets,   │  │
+│  │   Hot Data)     │  │   Filters)       │  │   Product Images)   │  │
+│  └─────────────────┘  └─────────────────┘  └─────────────────────┘  │
+└─────────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                      DATABASE LAYER                                  │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────────┐  │
+│  │  Primary DB     │  │  Read Replicas  │  │  Time Series DB     │  │
+│  │  (PostgreSQL/   │  │  (PostgreSQL/   │  │  (User Activity,    │  │
+│  │  CockroachDB)   │  │  CockroachDB)   │  │  Analytics)         │  │
+│  └─────────────────┘  └─────────────────┘  └─────────────────────┘  │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────────┐  │
+│  │  Blob Storage   │  │  Message Queue  │  │  Data Warehouse     │  │
+│  │  (S3/MinIO)     │  │  (Kafka/RabbitMQ)│  │  (Reporting/BI)     │  │
+│  └─────────────────┘  └─────────────────┘  └─────────────────────┘  │
+└─────────────────────────────────────────────────────────────────────┘
+2. Database Schema Design
+Core Tables Structure
+sql
+-- =====================================================
+-- TENANT / VERTICAL MANAGEMENT (Multi-domain support)
+-- =====================================================
+CREATE TABLE tenants (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    domain_type VARCHAR(50) NOT NULL, -- 'furniture', 'fashion', 'marketplace'
+    subdomain VARCHAR(100),
+    is_active BOOLEAN DEFAULT true,
+    config JSONB, -- Store vertical-specific configurations
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_tenants_domain_type ON tenants(domain_type);
+CREATE INDEX idx_tenants_subdomain ON tenants(subdomain);
+
+-- =====================================================
+-- CATEGORY MANAGEMENT (Multi-level hierarchy)
+-- =====================================================
+CREATE TABLE categories (
+    id BIGSERIAL PRIMARY KEY,
+    tenant_id BIGINT REFERENCES tenants(id),
+    parent_id BIGINT REFERENCES categories(id),
+    name VARCHAR(200) NOT NULL,
+    slug VARCHAR(250) UNIQUE NOT NULL,
+    level INT NOT NULL, -- 1,2,3 for hierarchy depth
+    path LTREE, -- For efficient hierarchical queries
+    image_url TEXT,
+    icon_url TEXT,
+    display_order INT DEFAULT 0,
+    is_active BOOLEAN DEFAULT true,
+    meta_title VARCHAR(200),
+    meta_description TEXT,
+    meta_keywords TEXT,
+    filter_config JSONB, -- Pre-defined filters for this category
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_categories_parent ON categories(parent_id);
+CREATE INDEX idx_categories_path ON categories USING GIST(path);
+CREATE INDEX idx_categories_tenant ON categories(tenant_id);
+CREATE INDEX idx_categories_slug ON categories(slug);
+
+-- =====================================================
+-- BRAND MANAGEMENT
+-- =====================================================
+CREATE TABLE brands (
+    id BIGSERIAL PRIMARY KEY,
+    tenant_id BIGINT REFERENCES tenants(id),
+    name VARCHAR(200) NOT NULL,
+    slug VARCHAR(250) UNIQUE NOT NULL,
+    logo_url TEXT,
+    cover_image_url TEXT,
+    description TEXT,
+    is_active BOOLEAN DEFAULT true,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_brands_tenant ON brands(tenant_id);
+CREATE INDEX idx_brands_slug ON brands(slug);
+
+-- =====================================================
+-- PRODUCT MANAGEMENT (Denormalized for performance)
+-- =====================================================
+CREATE TABLE products (
+    id BIGSERIAL PRIMARY KEY,
+    tenant_id BIGINT REFERENCES tenants(id),
+    brand_id BIGINT REFERENCES brands(id),
+    category_id BIGINT REFERENCES categories(id),
+    sku VARCHAR(100) UNIQUE NOT NULL,
+    name VARCHAR(500) NOT NULL,
+    slug VARCHAR(550) UNIQUE NOT NULL,
+    short_description TEXT,
+    long_description TEXT,
+    base_price DECIMAL(12,2) NOT NULL,
+    discount_percent DECIMAL(5,2) DEFAULT 0,
+    final_price DECIMAL(12,2) GENERATED ALWAYS AS (base_price * (1 - discount_percent/100)) STORED,
+    tax_percent DECIMAL(5,2) DEFAULT 0,
+    stock_quantity INT DEFAULT 0,
+    low_stock_threshold INT DEFAULT 5,
+    is_active BOOLEAN DEFAULT true,
+    is_featured BOOLEAN DEFAULT false,
+    is_new BOOLEAN DEFAULT false,
+    has_variants BOOLEAN DEFAULT false,
+    warranty_months INT,
+    warranty_description TEXT,
+    meta_title VARCHAR(200),
+    meta_description TEXT,
+    meta_keywords TEXT,
+    search_vector TSVECTOR, -- For full-text search
+    specifications JSONB, -- Technical specs stored as JSON
+    seo_data JSONB,
+    avg_rating DECIMAL(3,2) DEFAULT 0,
+    total_reviews INT DEFAULT 0,
+    total_ratings INT DEFAULT 0,
+    view_count BIGINT DEFAULT 0,
+    purchase_count BIGINT DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_products_tenant ON products(tenant_id);
+CREATE INDEX idx_products_brand ON products(brand_id);
+CREATE INDEX idx_products_category ON products(category_id);
+CREATE INDEX idx_products_price ON products(final_price);
+CREATE INDEX idx_products_rating ON products(avg_rating);
+CREATE INDEX idx_products_created ON products(created_at);
+CREATE INDEX idx_products_is_active ON products(is_active) WHERE is_active = true;
+CREATE INDEX idx_products_search ON products USING GIN(search_vector);
+CREATE INDEX idx_products_specs ON products USING GIN(specifications);
+
+-- =====================================================
+-- PRODUCT VARIANTS (Size, Color, Storage, etc.)
+-- =====================================================
+CREATE TABLE product_variant_types (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL, -- 'Color', 'Size', 'Storage', 'RAM'
+    display_name VARCHAR(100),
+    data_type VARCHAR(50), -- 'string', 'integer', 'decimal'
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE product_variant_values (
+    id BIGSERIAL PRIMARY KEY,
+    variant_type_id BIGINT REFERENCES product_variant_types(id),
+    value VARCHAR(200) NOT NULL,
+    display_value VARCHAR(200),
+    swatch_image_url TEXT, -- For color swatches
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE product_variants (
+    id BIGSERIAL PRIMARY KEY,
+    product_id BIGINT REFERENCES products(id) ON DELETE CASCADE,
+    variant_value_id BIGINT REFERENCES product_variant_values(id),
+    sku VARCHAR(100) UNIQUE NOT NULL,
+    price_adjustment DECIMAL(12,2) DEFAULT 0,
+    stock_quantity INT DEFAULT 0,
+    image_url TEXT, -- Variant-specific image
+    is_active BOOLEAN DEFAULT true,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(product_id, variant_value_id)
+);
+
+CREATE INDEX idx_product_variants_product ON product_variants(product_id);
+CREATE INDEX idx_product_variants_sku ON product_variants(sku);
+
+-- =====================================================
+-- PRODUCT IMAGES
+-- =====================================================
+CREATE TABLE product_images (
+    id BIGSERIAL PRIMARY KEY,
+    product_id BIGINT REFERENCES products(id) ON DELETE CASCADE,
+    variant_id BIGINT REFERENCES product_variants(id),
+    image_url TEXT NOT NULL,
+    thumbnail_url TEXT,
+    medium_url TEXT,
+    large_url TEXT,
+    alt_text VARCHAR(255),
+    display_order INT DEFAULT 0,
+    is_primary BOOLEAN DEFAULT false,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_product_images_product ON product_images(product_id);
+CREATE INDEX idx_product_images_primary ON product_images(product_id, is_primary) WHERE is_primary = true;
+
+-- =====================================================
+-- FILTER ATTRIBUTES (Dynamic filtering system)
+-- =====================================================
+CREATE TABLE filter_attributes (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL, -- 'ram', 'storage', 'processor', 'screen_size'
+    display_name VARCHAR(100),
+    data_type VARCHAR(50), -- 'range', 'multiselect', 'boolean', 'string'
+    unit VARCHAR(20), -- 'GB', 'inch', 'MP'
+    is_searchable BOOLEAN DEFAULT true,
+    is_filterable BOOLEAN DEFAULT true,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE category_filters (
+    category_id BIGINT REFERENCES categories(id) ON DELETE CASCADE,
+    filter_attribute_id BIGINT REFERENCES filter_attributes(id),
+    display_order INT DEFAULT 0,
+    PRIMARY KEY (category_id, filter_attribute_id)
+);
+
+CREATE TABLE product_filter_values (
+    id BIGSERIAL PRIMARY KEY,
+    product_id BIGINT REFERENCES products(id) ON DELETE CASCADE,
+    filter_attribute_id BIGINT REFERENCES filter_attributes(id),
+    value_text TEXT,
+    value_number DECIMAL(12,2),
+    value_boolean BOOLEAN,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_product_filter_values_product ON product_filter_values(product_id);
+CREATE INDEX idx_product_filter_values_attribute ON product_filter_values(filter_attribute_id);
+
+-- =====================================================
+-- USER MANAGEMENT
+-- =====================================================
+CREATE TABLE users (
+    id BIGSERIAL PRIMARY KEY,
+    email VARCHAR(255) UNIQUE,
+    phone VARCHAR(20) UNIQUE,
+    first_name VARCHAR(100),
+    last_name VARCHAR(100),
+    password_hash VARCHAR(255),
+    is_phone_verified BOOLEAN DEFAULT false,
+    is_email_verified BOOLEAN DEFAULT false,
+    otp_code VARCHAR(6),
+    otp_expiry TIMESTAMP,
+    profile_pic_url TEXT,
+    preferred_language VARCHAR(10) DEFAULT 'en',
+    is_active BOOLEAN DEFAULT true,
+    last_login_at TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_users_email ON users(email);
+CREATE INDEX idx_users_phone ON users(phone);
+CREATE INDEX idx_users_created ON users(created_at);
+
+CREATE TABLE user_addresses (
+    id BIGSERIAL PRIMARY KEY,
+    user_id BIGINT REFERENCES users(id) ON DELETE CASCADE,
+    address_type VARCHAR(50), -- 'home', 'work', 'other'
+    recipient_name VARCHAR(200) NOT NULL,
+    recipient_phone VARCHAR(20) NOT NULL,
+    address_line1 VARCHAR(255) NOT NULL,
+    address_line2 VARCHAR(255),
+    landmark VARCHAR(255),
+    city VARCHAR(100) NOT NULL,
+    state VARCHAR(100) NOT NULL,
+    pincode VARCHAR(10) NOT NULL,
+    country VARCHAR(100) DEFAULT 'India',
+    is_default BOOLEAN DEFAULT false,
+    latitude DECIMAL(10,8),
+    longitude DECIMAL(11,8),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_user_addresses_user ON user_addresses(user_id);
+CREATE INDEX idx_user_addresses_pincode ON user_addresses(pincode);
+
+-- =====================================================
+-- CART & WISHLIST
+-- =====================================================
+CREATE TABLE cart (
+    id BIGSERIAL PRIMARY KEY,
+    user_id BIGINT REFERENCES users(id) ON DELETE CASCADE UNIQUE,
+    session_id VARCHAR(255), -- For guest users
+    total_items INT DEFAULT 0,
+    subtotal DECIMAL(12,2) DEFAULT 0,
+    discount_total DECIMAL(12,2) DEFAULT 0,
+    tax_total DECIMAL(12,2) DEFAULT 0,
+    grand_total DECIMAL(12,2) DEFAULT 0,
+    is_active BOOLEAN DEFAULT true,
+    expires_at TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_cart_user ON cart(user_id);
+CREATE INDEX idx_cart_session ON cart(session_id);
+
+CREATE TABLE cart_items (
+    id BIGSERIAL PRIMARY KEY,
+    cart_id BIGINT REFERENCES cart(id) ON DELETE CASCADE,
+    product_id BIGINT REFERENCES products(id),
+    variant_id BIGINT REFERENCES product_variants(id),
+    quantity INT NOT NULL,
+    unit_price DECIMAL(12,2) NOT NULL,
+    total_price DECIMAL(12,2) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_cart_items_cart ON cart_items(cart_id);
+
+CREATE TABLE wishlist (
+    id BIGSERIAL PRIMARY KEY,
+    user_id BIGINT REFERENCES users(id) ON DELETE CASCADE,
+    product_id BIGINT REFERENCES products(id) ON DELETE CASCADE,
+    variant_id BIGINT REFERENCES product_variants(id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(user_id, product_id, variant_id)
+);
+
+CREATE INDEX idx_wishlist_user ON wishlist(user_id);
+
+-- =====================================================
+-- CMS: BANNER & HERO MANAGEMENT
+-- =====================================================
+CREATE TABLE banner_positions (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL, -- 'homepage_main', 'category_top', 'promotional'
+    code VARCHAR(50) UNIQUE NOT NULL,
+    description TEXT,
+    max_banners INT DEFAULT 10,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE banners (
+    id BIGSERIAL PRIMARY KEY,
+    tenant_id BIGINT REFERENCES tenants(id),
+    position_id BIGINT REFERENCES banner_positions(id),
+    title VARCHAR(200) NOT NULL,
+    subtitle VARCHAR(500),
+    description TEXT,
+    image_desktop TEXT NOT NULL, -- Desktop version
+    image_tablet TEXT, -- Tablet version
+    image_mobile TEXT, -- Mobile version
+    cta_text VARCHAR(100),
+    cta_link VARCHAR(500),
+    cta_type VARCHAR(50), -- 'product', 'category', 'external', 'collection'
+    cta_target_id BIGINT, -- ID of product/category/collection
+    display_order INT DEFAULT 0,
+    is_active BOOLEAN DEFAULT true,
+    start_date TIMESTAMP,
+    end_date TIMESTAMP,
+    schedule_type VARCHAR(50), -- 'always', 'date_range', 'festival'
+    festival_tags JSONB, -- ['diwali', 'summer_sale']
+    background_color VARCHAR(20),
+    text_color VARCHAR(20),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_banners_tenant ON banners(tenant_id);
+CREATE INDEX idx_banners_position ON banners(position_id);
+CREATE INDEX idx_banners_active ON banners(is_active) WHERE is_active = true;
+CREATE INDEX idx_banners_dates ON banners(start_date, end_date) WHERE is_active = true;
+CREATE INDEX idx_banners_festival ON banners USING GIN(festival_tags);
+
+CREATE TABLE hero_sections (
+    id BIGSERIAL PRIMARY KEY,
+    tenant_id BIGINT REFERENCES tenants(id),
+    name VARCHAR(100) NOT NULL,
+    section_code VARCHAR(50) UNIQUE NOT NULL,
+    layout_type VARCHAR(50), -- 'grid_2x2', 'grid_3x1', 'carousel', 'featured'
+    grid_config JSONB, -- Grid dimensions configuration
+    is_active BOOLEAN DEFAULT true,
+    display_order INT DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE hero_items (
+    id BIGSERIAL PRIMARY KEY,
+    hero_section_id BIGINT REFERENCES hero_sections(id) ON DELETE CASCADE,
+    title VARCHAR(200),
+    subtitle VARCHAR(500),
+    image_desktop TEXT,
+    image_tablet TEXT,
+    image_mobile TEXT,
+    link_type VARCHAR(50),
+    link_target_id BIGINT,
+    link_url VARCHAR(500),
+    display_order INT DEFAULT 0,
+    is_active BOOLEAN DEFAULT true,
+    start_date TIMESTAMP,
+    end_date TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_hero_items_section ON hero_items(hero_section_id);
+
+-- =====================================================
+-- DYNAMIC GRID SYSTEM (Section-wise product blocks)
+-- =====================================================
+CREATE TABLE grid_sections (
+    id BIGSERIAL PRIMARY KEY,
+    tenant_id BIGINT REFERENCES tenants(id),
+    name VARCHAR(200) NOT NULL,
+    section_code VARCHAR(50) UNIQUE NOT NULL,
+    section_type VARCHAR(50), -- 'product_grid', 'category_grid', 'brand_grid', 'custom'
+    layout_template VARCHAR(50), -- 'grid_4', 'grid_5', 'carousel'
+    title VARCHAR(200),
+    subtitle VARCHAR(500),
+    view_all_link VARCHAR(500),
+    is_active BOOLEAN DEFAULT true,
+    display_order INT DEFAULT 0,
+    display_conditions JSONB, -- When to show this section
+    theme_config JSONB, -- Colors, styling
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE grid_section_items (
+    id BIGSERIAL PRIMARY KEY,
+    grid_section_id BIGINT REFERENCES grid_sections(id) ON DELETE CASCADE,
+    item_type VARCHAR(50), -- 'product', 'category', 'brand', 'custom'
+    item_id BIGINT, -- ID of product/category/brand
+    custom_data JSONB, -- For custom items
+    image_url TEXT,
+    title VARCHAR(200),
+    subtitle VARCHAR(500),
+    display_order INT DEFAULT 0,
+    is_active BOOLEAN DEFAULT true,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_grid_items_section ON grid_section_items(grid_section_id);
+
+-- =====================================================
+-- USER ACTIVITY TRACKING (For personalization)
+-- =====================================================
+CREATE TABLE user_activities (
+    id BIGSERIAL PRIMARY KEY,
+    user_id BIGINT REFERENCES users(id) ON DELETE CASCADE,
+    session_id VARCHAR(255),
+    activity_type VARCHAR(50) NOT NULL, -- 'view', 'search', 'cart_add', 'wishlist', 'purchase'
+    entity_type VARCHAR(50), -- 'product', 'category', 'brand', 'search_query'
+    entity_id BIGINT,
+    search_query TEXT,
+    metadata JSONB, -- Additional context (filters used, etc.)
+    device_type VARCHAR(20),
+    ip_address INET,
+    user_agent TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_user_activities_user ON user_activities(user_id);
+CREATE INDEX idx_user_activities_type ON user_activities(activity_type);
+CREATE INDEX idx_user_activities_entity ON user_activities(entity_type, entity_id);
+CREATE INDEX idx_user_activities_created ON user_activities(created_at);
+
+-- Partition by created_at for better performance
+-- CREATE TABLE user_activities_202501 PARTITION OF user_activities ...
+
+-- =====================================================
+-- PERSONALIZED RECOMMENDATIONS
+-- =====================================================
+CREATE TABLE user_recommendations (
+    id BIGSERIAL PRIMARY KEY,
+    user_id BIGINT REFERENCES users(id) ON DELETE CASCADE,
+    recommendation_type VARCHAR(50), -- 'similar_products', 'frequently_bought', 'trending', 'personalized'
+    product_id BIGINT REFERENCES products(id),
+    score DECIMAL(5,4),
+    reason TEXT,
+    expires_at TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(user_id, recommendation_type, product_id)
+);
+
+CREATE INDEX idx_recommendations_user ON user_recommendations(user_id);
+CREATE INDEX idx_recommendations_expires ON user_recommendations(expires_at);
+
+-- =====================================================
+-- RATINGS & REVIEWS
+-- =====================================================
+CREATE TABLE reviews (
+    id BIGSERIAL PRIMARY KEY,
+    product_id BIGINT REFERENCES products(id) ON DELETE CASCADE,
+    user_id BIGINT REFERENCES users(id) ON DELETE SET NULL,
+    order_id BIGINT, -- To verify purchase
+    rating INT NOT NULL CHECK (rating BETWEEN 1 AND 5),
+    title VARCHAR(255),
+    content TEXT,
+    pros TEXT,
+    cons TEXT,
+    is_verified_purchase BOOLEAN DEFAULT false,
+    helpful_count INT DEFAULT 0,
+    not_helpful_count INT DEFAULT 0,
+    status VARCHAR(20) DEFAULT 'pending', -- 'pending', 'approved', 'rejected'
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_reviews_product ON reviews(product_id);
+CREATE INDEX idx_reviews_user ON reviews(user_id);
+CREATE INDEX idx_reviews_rating ON reviews(rating);
+CREATE INDEX idx_reviews_status ON reviews(status);
+
+CREATE TABLE review_images (
+    id BIGSERIAL PRIMARY KEY,
+    review_id BIGINT REFERENCES reviews(id) ON DELETE CASCADE,
+    image_url TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE review_helpfulness (
+    user_id BIGINT REFERENCES users(id) ON DELETE CASCADE,
+    review_id BIGINT REFERENCES reviews(id) ON DELETE CASCADE,
+    is_helpful BOOLEAN,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (user_id, review_id)
+);
+
+-- =====================================================
+-- ORDERS & CHECKOUT
+-- =====================================================
+CREATE TABLE orders (
+    id BIGSERIAL PRIMARY KEY,
+    order_number VARCHAR(50) UNIQUE NOT NULL,
+    user_id BIGINT REFERENCES users(id),
+    address_id BIGINT REFERENCES user_addresses(id),
+    order_status VARCHAR(50) DEFAULT 'pending',
+    payment_status VARCHAR(50) DEFAULT 'pending',
+    payment_method VARCHAR(50),
+    subtotal DECIMAL(12,2) NOT NULL,
+    discount_total DECIMAL(12,2) DEFAULT 0,
+    tax_total DECIMAL(12,2) DEFAULT 0,
+    shipping_total DECIMAL(12,2) DEFAULT 0,
+    grand_total DECIMAL(12,2) NOT NULL,
+    coupon_code VARCHAR(50),
+    coupon_discount DECIMAL(12,2) DEFAULT 0,
+    notes TEXT,
+    placed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    confirmed_at TIMESTAMP,
+    shipped_at TIMESTAMP,
+    delivered_at TIMESTAMP,
+    cancelled_at TIMESTAMP,
+    cancellation_reason TEXT
+);
+
+CREATE INDEX idx_orders_user ON orders(user_id);
+CREATE INDEX idx_orders_number ON orders(order_number);
+CREATE INDEX idx_orders_status ON orders(order_status);
+CREATE INDEX idx_orders_placed ON orders(placed_at);
+
+CREATE TABLE order_items (
+    id BIGSERIAL PRIMARY KEY,
+    order_id BIGINT REFERENCES orders(id) ON DELETE CASCADE,
+    product_id BIGINT REFERENCES products(id),
+    variant_id BIGINT REFERENCES product_variants(id),
+    quantity INT NOT NULL,
+    unit_price DECIMAL(12,2) NOT NULL,
+    discount_amount DECIMAL(12,2) DEFAULT 0,
+    tax_amount DECIMAL(12,2) DEFAULT 0,
+    total_price DECIMAL(12,2) NOT NULL,
+    product_snapshot JSONB -- Denormalized product data at time of purchase
+);
+
+CREATE INDEX idx_order_items_order ON order_items(order_id);
+3. Query Optimization Strategy
+Materialized Views for Common Queries
+sql
+-- Materialized view for product listings with filters
+CREATE MATERIALIZED VIEW mv_product_listings AS
+SELECT 
+    p.id,
+    p.tenant_id,
+    p.name,
+    p.slug,
+    p.final_price,
+    p.avg_rating,
+    p.total_reviews,
+    p.is_featured,
+    p.is_new,
+    p.created_at,
+    c.id as category_id,
+    c.name as category_name,
+    c.slug as category_slug,
+    b.id as brand_id,
+    b.name as brand_name,
+    b.slug as brand_slug,
+    pi.image_url as primary_image,
+    -- Aggregate filter values for quick filtering
+    jsonb_agg(DISTINCT jsonb_build_object(
+        'filter_id', fv.filter_attribute_id,
+        'value', COALESCE(fv.value_text::text, fv.value_number::text, fv.value_boolean::text)
+    )) as filter_values
+FROM products p
+JOIN categories c ON p.category_id = c.id
+JOIN brands b ON p.brand_id = b.id
+LEFT JOIN product_images pi ON p.id = pi.product_id AND pi.is_primary = true
+LEFT JOIN product_filter_values fv ON p.id = fv.product_id
+WHERE p.is_active = true
+GROUP BY p.id, c.id, b.id, pi.image_url;
+
+CREATE INDEX idx_mv_product_listings_price ON mv_product_listings(final_price);
+CREATE INDEX idx_mv_product_listings_rating ON mv_product_listings(avg_rating);
+CREATE INDEX idx_mv_product_listings_category ON mv_product_listings(category_id);
+CREATE INDEX idx_mv_product_listings_brand ON mv_product_listings(brand_id);
+
+REFRESH MATERIALIZED VIEW CONCURRENTLY mv_product_listings;
+Efficient Category Tree Queries with LTREE
+sql
+-- Get entire category tree for a tenant
+SELECT * FROM categories 
+WHERE path <@ (SELECT path FROM categories WHERE id = ?) 
+ORDER BY path;
+
+-- Get all subcategories
+SELECT * FROM categories 
+WHERE path ~ (SELECT path FROM categories WHERE id = ?) || '.*{1,}';
+4. Caching Strategy
+Redis Cache Structure
+python
+# Cache Keys and TTL
+CACHE_KEYS = {
+    # Product details (TTL: 1 hour)
+    "product:{id}": {
+        "ttl": 3600,
+        "invalidate_on": ["product_update", "price_change"]
+    },
+    
+    # Category tree (TTL: 24 hours)
+    "category:tree:{tenant_id}": {
+        "ttl": 86400,
+        "invalidate_on": ["category_update"]
+    },
+    
+    # Filter options for category (TTL: 1 hour)
+    "filters:category:{category_id}": {
+        "ttl": 3600,
+        "invalidate_on": ["product_update", "filter_change"]
+    },
+    
+    # User session (TTL: 30 minutes)
+    "session:{user_id}": {
+        "ttl": 1800,
+        "invalidate_on": ["logout", "session_expiry"]
+    },
+    
+    # User cart (TTL: 24 hours)
+    "cart:{user_id}": {
+        "ttl": 86400,
+        "invalidate_on": ["cart_update", "checkout"]
+    },
+    
+    # Homepage sections (TTL: 1 hour)
+    "homepage:{tenant_id}": {
+        "ttl": 3600,
+        "invalidate_on": ["cms_update", "banner_update"]
+    },
+    
+    # Trending products (TTL: 6 hours)
+    "trending:{category_id}": {
+        "ttl": 21600,
+        "invalidate_on": ["trending_recalc"]
+    },
+    
+    # Personalized recommendations (TTL: 12 hours)
+    "recommendations:{user_id}": {
+        "ttl": 43200,
+        "invalidate_on": ["user_activity", "purchase"]
+    }
+}
+Cache Warming Strategy
+python
+# Warm cache for popular products
+def warm_popular_products():
+    popular_products = db.query("""
+        SELECT id FROM products 
+        WHERE view_count > 1000 
+        ORDER BY view_count DESC 
+        LIMIT 1000
+    """)
+    
+    for product in popular_products:
+        cache_product_details(product.id)
+        cache_product_filters(product.id)
+5. Search & Filtering Optimization
+Elasticsearch Index Mapping
+json
+{
+  "mappings": {
+    "properties": {
+      "id": {"type": "long"},
+      "name": {
+        "type": "text",
+        "fields": {
+          "keyword": {"type": "keyword", "ignore_above": 256},
+          "suggest": {"type": "completion"}
+        }
+      },
+      "description": {"type": "text"},
+      "category": {
+        "properties": {
+          "id": {"type": "long"},
+          "name": {"type": "keyword"},
+          "path": {"type": "keyword"}
+        }
+      },
+      "brand": {
+        "properties": {
+          "id": {"type": "long"},
+          "name": {"type": "keyword"}
+        }
+      },
+      "price": {"type": "float"},
+      "rating": {"type": "float"},
+      "in_stock": {"type": "boolean"},
+      "filters": {
+        "type": "nested",
+        "properties": {
+          "attribute_id": {"type": "long"},
+          "attribute_name": {"type": "keyword"},
+          "value_text": {"type": "keyword"},
+          "value_number": {"type": "float"},
+          "value_boolean": {"type": "boolean"}
+        }
+      },
+      "created_at": {"type": "date"},
+      "suggest": {
+        "type": "completion",
+        "contexts": [
+          {"name": "category_id", "type": "category"},
+          {"name": "tenant_id", "type": "category"}
+        ]
+      }
+    }
+  }
+}
+Query Pattern Optimization
+sql
+-- Instead of multiple joins, use denormalized approach
+-- BAD: Multiple joins
+SELECT p.*, c.name, b.name 
+FROM products p
+JOIN categories c ON p.category_id = c.id
+JOIN brands b ON p.brand_id = b.id
+WHERE p.category_id IN (SELECT id FROM categories WHERE parent_id = 123)
+
+-- GOOD: Use materialized view or cache
+SELECT * FROM mv_product_listings 
+WHERE category_path @> 'Electronics.Mobiles'
+AND final_price BETWEEN 10000 AND 20000
+AND filter_values @> '[{"filter_id": 5, "value": "5G"}]'
+6. Personalization Engine
+User Activity Scoring
+sql
+-- Calculate user interest scores
+CREATE MATERIALIZED VIEW mv_user_interests AS
+SELECT 
+    user_id,
+    category_id,
+    SUM(
+        CASE activity_type
+            WHEN 'view' THEN 1
+            WHEN 'cart_add' THEN 5
+            WHEN 'purchase' THEN 10
+            WHEN 'wishlist' THEN 3
+            WHEN 'search' THEN 2
+            ELSE 0
+        END * 
+        CASE 
+            WHEN created_at > NOW() - INTERVAL '7 days' THEN 1.5
+            WHEN created_at > NOW() - INTERVAL '30 days' THEN 1.0
+            ELSE 0.5
+        END
+    ) as interest_score,
+    MAX(created_at) as last_interaction
+FROM user_activities
+WHERE entity_type = 'category'
+GROUP BY user_id, category_id;
+
+CREATE INDEX idx_user_interests_user ON mv_user_interests(user_id);
+Recommendation Queries
+sql
+-- Collaborative filtering: Users who bought this also bought
+SELECT DISTINCT p2.*
+FROM order_items oi1
+JOIN orders o ON oi1.order_id = o.id
+JOIN order_items oi2 ON o.id = oi2.order_id
+JOIN products p2 ON oi2.product_id = p2.id
+WHERE oi1.product_id = ?
+AND oi2.product_id != ?
+AND p2.is_active = true
+GROUP BY p2.id
+ORDER BY COUNT(*) DESC
+LIMIT 10;
+
+-- Content-based: Similar products by category and filters
+SELECT p.*
+FROM products p
+JOIN product_filter_values fv1 ON p.id = fv1.product_id
+JOIN product_filter_values fv2 ON fv1.filter_attribute_id = fv2.filter_attribute_id 
+    AND fv1.value_text = fv2.value_text
+WHERE fv2.product_id = ?
+AND p.id != ?
+AND p.category_id = ?
+GROUP BY p.id
+ORDER BY COUNT(*) DESC
+LIMIT 10;
+7. Scalability Considerations
+Database Sharding Strategy
+sql
+-- Shard by tenant_id for multi-tenant support
+-- Shard key: tenant_id % number_of_shards
+
+-- For user data, shard by user_id
+-- Shard key: user_id % number_of_shards
+
+-- For orders, shard by order_date (time-based)
+-- Partition by month: orders_202501, orders_202502, etc.
+Read Replicas Distribution
+yaml
+Database Cluster:
+  Primary: Write operations (orders, cart updates, user registration)
+  Read Replica 1: Product catalog queries
+  Read Replica 2: Search and filtering
+  Read Replica 3: Analytics and reporting
+  Read Replica 4: Personalization engine
+Connection Pooling
+python
+# PostgreSQL connection pool configuration
+connection_pool = {
+    "min_size": 10,
+    "max_size": 100,
+    "max_queries": 50000,
+    "max_inactive_connection_lifetime": 300,
+    "statement_cache_size": 1000
+}
+8. API Design for Performance
+GraphQL Schema Example
+graphql
+type Query {
+  # Single query with optimized field selection
+  product(id: ID!): Product {
+    id
+    name
+    price
+    # Only fetch requested fields
+    images(size: "medium") @include(if: $includeImages)
+    specifications @include(if: $includeSpecs)
+  }
+  
+  # Batched product queries
+  products(ids: [ID!]!): [Product]!
+  
+  # Filtered listing with cursor-based pagination
+  productListing(
+    categoryId: ID
+    filters: FilterInput
+    sort: SortInput
+    first: Int
+    after: String
+  ): ProductConnection!
+}
+
+type ProductConnection {
+  edges: [ProductEdge!]!
+  pageInfo: PageInfo!
+  aggregations: FilterAggregations! # Faceted search counts
+}
+Batch Loading with DataLoader
+javascript
+// Batch load products
+const productLoader = new DataLoader(async (ids) => {
+  const products = await db.select('*')
+    .from('products')
+    .whereIn('id', ids)
+    .where('is_active', true);
+  
+  return ids.map(id => products.find(p => p.id === id));
+});
+
+// Batch load images
+const imageLoader = new DataLoader(async (productIds) => {
+  const images = await db.select('*')
+    .from('product_images')
+    .whereIn('product_id', productIds)
+    .where('is_
+now give every table for dummy data
+Comprehensive Dummy Data for E-Commerce Database
+Core Data
+Tenants (Multi-Vertical Support)
+sql
+INSERT INTO tenants (id, name, domain_type, subdomain, is_active, config) VALUES
+(1, 'Flipkart Marketplace', 'marketplace', 'www', true, '{"supports_multi_category": true, "has_fashion": true, "has_electronics": true, "has_furniture": true}'),
+(2, 'Flipkart Furniture', 'furniture', 'furniture', true, '{"categories": ["sofa", "bed", "table", "chair"], "delivery_type": "heavy"}'),
+(3, 'Flipkart Fashion', 'fashion', 'fashion', true, '{"categories": ["men", "women", "kids"], "sizes": ["XS", "S", "M", "L", "XL", "XXL"]}'),
+(4, 'Flipkart Electronics', 'electronics', 'electronics', true, '{"categories": ["mobiles", "laptops", "tvs"], "brands": ["samsung", "apple", "mi"]}');
+Categories
+sql
+-- Insert category hierarchy using LTREE path
+INSERT INTO categories (id, tenant_id, parent_id, name, slug, level, path, image_url, is_active, filter_config) VALUES
+-- Electronics (Level 1)
+(1, 4, NULL, 'Electronics', 'electronics', 1, '1', '/images/categories/electronics.jpg', true, '{"filters": ["brand", "price", "rating"]}'),
+(2, 4, 1, 'Mobiles', 'mobiles', 2, '1.2', '/images/categories/mobiles.jpg', true, '{"filters": ["ram", "storage", "processor", "camera", "battery"]}'),
+(3, 4, 1, 'Laptops', 'laptops', 2, '1.3', '/images/categories/laptops.jpg', true, '{"filters": ["ram", "storage", "processor", "graphics"]}'),
+(4, 4, 1, 'Televisions', 'televisions', 2, '1.4', '/images/categories/tvs.jpg', true, '{"filters": ["screen_size", "display_type", "smart_tv"]}'),
+
+-- Mobile Subcategories (Level 3)
+(5, 4, 2, 'Smartphones', 'smartphones', 3, '1.2.5', '/images/categories/smartphones.jpg', true, '{"filters": ["5g", "display", "fast_charging"]}'),
+(6, 4, 2, 'Accessories', 'mobile-accessories', 3, '1.2.6', '/images/categories/mobile-accessories.jpg', true, '{"filters": ["type", "compatible"]}'),
+
+-- Fashion (Level 1)
+(7, 3, NULL, 'Fashion', 'fashion', 1, '7', '/images/categories/fashion.jpg', true, '{"filters": ["brand", "size", "color", "material"]}'),
+(8, 3, 7, 'Men', 'men', 2, '7.8', '/images/categories/men.jpg', true, '{"filters": ["size", "color", "fit"]}'),
+(9, 3, 7, 'Women', 'women', 2, '7.9', '/images/categories/women.jpg', true, '{"filters": ["size", "color", "occasion"]}'),
+(10, 3, 8, 'Shirts', 'shirts', 3, '7.8.10', '/images/categories/shirts.jpg', true, '{"filters": ["sleeve", "collar", "pattern", "fabric"]}'),
+(11, 3, 8, 'Jeans', 'jeans', 3, '7.8.11', '/images/categories/jeans.jpg', true, '{"filters": ["fit", "rise", "stretch", "wash"]}'),
+(12, 3, 9, 'Dresses', 'dresses', 3, '7.9.12', '/images/categories/dresses.jpg', true, '{"filters": ["length", "neckline", "sleeve", "occasion"]}'),
+
+-- Furniture (Level 1)
+(13, 2, NULL, 'Furniture', 'furniture', 1, '13', '/images/categories/furniture.jpg', true, '{"filters": ["material", "color", "assembly"]}'),
+(14, 2, 13, 'Sofas', 'sofas', 2, '13.14', '/images/categories/sofas.jpg', true, '{"filters": ["seater", "filling", "cover"]}'),
+(15, 2, 13, 'Beds', 'beds', 2, '13.15', '/images/categories/beds.jpg', true, '{"filters": ["size", "storage", "material"]}');
+Brands
+sql
+INSERT INTO brands (id, tenant_id, name, slug, logo_url, description, is_active) VALUES
+(1, 4, 'Samsung', 'samsung', '/images/brands/samsung.png', 'South Korean multinational electronics company', true),
+(2, 4, 'Apple', 'apple', '/images/brands/apple.png', 'American technology company', true),
+(3, 4, 'Xiaomi', 'xiaomi', '/images/brands/xiaomi.png', 'Chinese electronics company', true),
+(4, 4, 'OnePlus', 'oneplus', '/images/brands/oneplus.png', 'Chinese smartphone manufacturer', true),
+(5, 4, 'Realme', 'realme', '/images/brands/realme.png', 'Chinese smartphone manufacturer', true),
+(6, 4, 'OPPO', 'oppo', '/images/brands/oppo.png', 'Chinese electronics company', true),
+(7, 4, 'Vivo', 'vivo', '/images/brands/vivo.png', 'Chinese technology company', true),
+(8, 4, 'LG', 'lg', '/images/brands/lg.png', 'South Korean electronics company', true),
+(9, 4, 'Sony', 'sony', '/images/brands/sony.png', 'Japanese conglomerate', true),
+(10, 3, 'Nike', 'nike', '/images/brands/nike.png', 'American athletic footwear and apparel', true),
+(11, 3, 'Adidas', 'adidas', '/images/brands/adidas.png', 'German sportswear manufacturer', true),
+(12, 3, 'Puma', 'puma', '/images/brands/puma.png', 'German multinational company', true),
+(13, 3, 'Levi''s', 'levis', '/images/brands/levis.png', 'American clothing company', true),
+(14, 3, 'Zara', 'zara', '/images/brands/zara.png', 'Spanish fashion retailer', true),
+(15, 2, 'IKEA', 'ikea', '/images/brands/ikea.png', 'Swedish furniture company', true),
+(16, 2, 'Urban Ladder', 'urban-ladder', '/images/brands/urban-ladder.png', 'Indian furniture company', true),
+(17, 2, 'Pepperfry', 'pepperfry', '/images/brands/pepperfry.png', 'Indian e-commerce furniture company', true);
+Filter Attributes
+sql
+INSERT INTO filter_attributes (id, name, display_name, data_type, unit, is_searchable, is_filterable) VALUES
+(1, 'ram', 'RAM', 'range', 'GB', true, true),
+(2, 'storage', 'Storage', 'range', 'GB', true, true),
+(3, 'processor', 'Processor', 'string', NULL, true, true),
+(4, 'camera', 'Camera', 'range', 'MP', true, true),
+(5, 'battery', 'Battery Capacity', 'range', 'mAh', true, true),
+(6, 'screen_size', 'Screen Size', 'range', 'inch', true, true),
+(7, '5g', '5G Support', 'boolean', NULL, true, true),
+(8, 'display_type', 'Display Type', 'multiselect', NULL, true, true),
+(9, 'color', 'Color', 'multiselect', NULL, true, true),
+(10, 'size', 'Size', 'multiselect', NULL, true, true),
+(11, 'material', 'Material', 'multiselect', NULL, true, true),
+(12, 'fit', 'Fit', 'multiselect', NULL, true, true),
+(13, 'sleeve', 'Sleeve Length', 'multiselect', NULL, true, true),
+(14, 'pattern', 'Pattern', 'multiselect', NULL, true, true),
+(15, 'fabric', 'Fabric', 'multiselect', NULL, true, true),
+(16, 'seater', 'Seating Capacity', 'multiselect', NULL, true, true),
+(17, 'assembly', 'Assembly Required', 'boolean', NULL, true, true);
+Category Filters Mapping
+sql
+INSERT INTO category_filters (category_id, filter_attribute_id, display_order) VALUES
+-- Mobiles category filters
+(2, 1, 1), -- RAM
+(2, 2, 2), -- Storage
+(2, 3, 3), -- Processor
+(2, 4, 4), -- Camera
+(2, 5, 5), -- Battery
+(2, 6, 6), -- Screen Size
+(2, 7, 7), -- 5G Support
+
+-- Shirts category filters
+(10, 9, 1), -- Color
+(10, 10, 2), -- Size
+(10, 11, 3), -- Material
+(10, 13, 4), -- Sleeve
+(10, 14, 5), -- Pattern
+(10, 15, 6), -- Fabric
+
+-- Jeans category filters
+(11, 9, 1), -- Color
+(11, 10, 2), -- Size
+(11, 12, 3), -- Fit
+(11, 11, 4), -- Material
+
+-- Sofas category filters
+(14, 9, 1), -- Color
+(14, 11, 2), -- Material
+(14, 16, 3), -- Seater
+(14, 17, 4); -- Assembly Required
+Products Data
+Products - Electronics
+sql
+INSERT INTO products (id, tenant_id, brand_id, category_id, sku, name, slug, short_description, long_description, base_price, discount_percent, stock_quantity, is_active, is_featured, has_variants, warranty_months, specifications, avg_rating, total_reviews) VALUES
+(1, 4, 3, 5, 'XIAOMI-14-CIVI-001', 'Xiaomi 14 CIVI (Hot Pink, 512 GB)', 'xiaomi-14-civi-hot-pink-512gb', '12 GB RAM | 512 GB ROM | 16.64 cm Display | 50MP Camera | 4700 mAh Battery', 'Experience flagship performance with the Xiaomi 14 CIVI featuring Snapdragon 8s Gen 3 processor and 50MP triple camera setup.', 59999, 38, 50, true, true, true, 12, '{"processor": "Snapdragon 8s Gen 3", "ram_type": "LPDDR5X", "storage_type": "UFS 4.0", "display_resolution": "2400x1080", "refresh_rate": "120Hz", "fast_charging": "67W", "wireless_charging": true, "water_resistant": "IP68"}', 4.3, 115),
+(2, 4, 3, 5, 'REDMI-8-001', 'Redmi 8 (Onyx Black, 64 GB)', 'redmi-8-onyx-black-64gb', '4 GB RAM | 64 GB ROM | 15.8 cm Display | 12MP+2MP Camera | 5000 mAh Battery', 'Reliable budget smartphone with massive battery and Qualcomm Snapdragon 439 processor.', 10999, 0, 200, true, false, true, 12, '{"processor": "Snapdragon 439", "ram_type": "LPDDR3", "storage_type": "eMMC 5.1", "display_resolution": "1520x720", "refresh_rate": "60Hz", "fast_charging": "18W"}', 4.4, 65798),
+(3, 4, 4, 5, 'ONEPLUS-12-001', 'OnePlus 12 (Flowy Emerald, 256 GB)', 'oneplus-12-flowy-emerald-256gb', '16 GB RAM | 256 GB ROM | 17.02 cm Display | 50MP+48MP+64MP Camera | 5400 mAh Battery', 'Flagship killer with Hasselblad camera and Snapdragon 8 Gen 3 processor.', 64999, 15, 35, true, true, true, 12, '{"processor": "Snapdragon 8 Gen 3", "ram_type": "LPDDR5X", "storage_type": "UFS 4.0", "display_resolution": "3168x1440", "refresh_rate": "120Hz", "fast_charging": "100W", "wireless_charging": "50W"}', 4.5, 3421),
+(4, 4, 2, 5, 'IPHONE-15-PRO-001', 'iPhone 15 Pro (Natural Titanium, 256 GB)', 'iphone-15-pro-natural-titanium-256gb', '8 GB RAM | 256 GB ROM | 15.54 cm Display | 48MP+12MP+12MP Camera | 3274 mAh Battery', 'Apple''s most pro iPhone with A17 Pro chip and titanium design.', 134900, 8, 25, true, true, true, 12, '{"processor": "A17 Pro", "ram_type": "LPDDR5", "storage_type": "NVMe", "display_resolution": "2556x1179", "refresh_rate": "120Hz", "fast_charging": "27W", "wireless_charging": "15W", "water_resistant": "IP68"}', 4.7, 8921),
+(5, 4, 1, 5, 'SAMSUNG-S24-001', 'Samsung Galaxy S24 Ultra (Titanium Gray, 512 GB)', 'samsung-s24-ultra-titanium-gray-512gb', '12 GB RAM | 512 GB ROM | 17.3 cm Display | 200MP+50MP+12MP+10MP Camera | 5000 mAh Battery', 'Ultimate Android flagship with AI features and S Pen.', 129999, 12, 30, true, true, true, 12, '{"processor": "Snapdragon 8 Gen 3", "ram_type": "LPDDR5X", "storage_type": "UFS 4.0", "display_resolution": "3088x1440", "refresh_rate": "120Hz", "fast_charging": "45W", "wireless_charging": "15W", "water_resistant": "IP68", "s_pen": true}', 4.6, 5678),
+
+-- Laptops
+(6, 4, 2, 3, 'MACBOOK-PRO-001', 'MacBook Pro 14" (Space Black, 1TB)', 'macbook-pro-14-space-black-1tb', '16 GB RAM | 1TB SSD | 14.2" Liquid Retina XDR | M3 Pro Chip', 'Pro laptop with M3 Pro chip for maximum productivity.', 199900, 5, 15, true, true, true, 12, '{"processor": "Apple M3 Pro", "ram_type": "Unified", "storage_type": "SSD", "display_resolution": "3024x1964", "refresh_rate": "120Hz", "graphics": "19-core GPU", "battery": "70Wh"}', 4.8, 2341),
+(7, 4, 1, 3, 'SAMSUNG-GALAXY-BOOK-001', 'Samsung Galaxy Book3 Ultra (Graphite, 1TB)', 'samsung-galaxy-book3-ultra-graphite-1tb', '32 GB RAM | 1TB SSD | 16" Dynamic AMOLED 2X | Intel Core i9', 'Premium Windows laptop with stunning AMOLED display.', 219990, 10, 10, true, true, false, 12, '{"processor": "Intel Core i9-13900H", "ram_type": "DDR5", "storage_type": "SSD", "display_resolution": "2880x1800", "refresh_rate": "120Hz", "graphics": "NVIDIA RTX 4070", "battery": "76Wh"}', 4.5, 876),
+
+-- TVs
+(8, 4, 1, 4, 'SAMSUNG-NEO-OLED-001', 'Samsung Neo QLED 4K Smart TV (65 inch)', 'samsung-neo-qled-65-inch-4k', '65" Neo QLED | 4K Resolution | 120Hz | Quantum Processor', 'Premium QLED TV with Neo Quantum processor for lifelike picture.', 189990, 20, 8, true, true, false, 24, '{"display_type": "Neo QLED", "resolution": "4K", "refresh_rate": "120Hz", "hdr": "HDR10+", "smart_tv": true, "hdmi_ports": 4, "sound": "60W"}', 4.4, 543),
+(9, 4, 8, 4, 'LG-OLED-001', 'LG OLED evo C3 4K Smart TV (55 inch)', 'lg-oled-evo-c3-55-inch-4k', '55" OLED evo | 4K Resolution | 120Hz | α9 Gen6 Processor', 'OLED evo with perfect blacks and infinite contrast.', 154990, 25, 12, true, true, false, 24, '{"display_type": "OLED evo", "resolution": "4K", "refresh_rate": "120Hz", "hdr": "Dolby Vision", "smart_tv": true, "hdmi_ports": 4, "sound": "40W"}', 4.6, 987);
+Products - Fashion
+sql
+INSERT INTO products (id, tenant_id, brand_id, category_id, sku, name, slug, short_description, long_description, base_price, discount_percent, stock_quantity, is_active, is_featured, has_variants, specifications, avg_rating, total_reviews) VALUES
+(10, 3, 13, 10, 'LEVIS-SHIRT-001', 'Levi''s Men''s Regular Fit Check Shirt', 'levis-mens-regular-fit-check-shirt', 'Regular fit checked shirt in navy blue', 'Premium cotton checked shirt for casual occasions.', 2499, 30, 150, true, true, true, '{"fit": "Regular", "fabric": "100% Cotton", "pattern": "Checked", "sleeve": "Full Sleeve", "collar": "Spread", "occasion": "Casual"}', 4.2, 1245),
+(11, 3, 13, 10, 'LEVIS-SHIRT-002', 'Levi''s Men''s Slim Fit Formal Shirt', 'levis-mens-slim-fit-formal-shirt', 'Slim fit formal shirt in white', 'Crisp white formal shirt for office wear.', 2999, 25, 200, true, false, true, '{"fit": "Slim", "fabric": "Cotton Blend", "pattern": "Solid", "sleeve": "Full Sleeve", "collar": "Cutaway", "occasion": "Formal"}', 4.3, 876),
+(12, 3, 13, 11, 'LEVIS-JEANS-001', 'Levi''s Men''s 511 Slim Fit Jeans', 'levis-mens-511-slim-fit-jeans', 'Slim fit jeans in dark blue', 'Classic 511 slim fit jeans with stretch comfort.', 3999, 20, 180, true, true, true, '{"fit": "Slim", "rise": "Mid", "stretch": "Yes", "wash": "Dark", "fabric": "98% Cotton, 2% Elastane"}', 4.4, 2341),
+(13, 3, 10, 11, 'NIKE-JEANS-001', 'Nike Men''s Tech Fleece Jogger Jeans', 'nike-mens-tech-fleece-jogger-jeans', 'Tech fleece jogger jeans in black', 'Comfort meets style with these tech fleece jogger jeans.', 5499, 15, 120, true, false, true, '{"fit": "Jogger", "fabric": "Cotton Polyester", "wash": "Black", "pockets": 5}', 4.5, 654),
+(14, 3, 11, 12, 'ADIDAS-DRESS-001', 'Adidas Women''s Striped Sports Dress', 'adidas-womens-striped-sports-dress', 'Striped sports dress in black/white', 'Breathable sports dress for active lifestyle.', 3299, 20, 80, true, true, true, '{"length": "Knee", "fabric": "Polyester", "sleeve": "Short Sleeve", "occasion": "Sports", "fit": "Regular"}', 4.1, 432),
+(15, 3, 14, 12, 'ZARA-DRESS-001', 'ZARA Women''s Floral Print Midi Dress', 'zara-womens-floral-print-midi-dress', 'Floral print midi dress in multicolor', 'Elegant floral dress for special occasions.', 4599, 10, 60, true, true, true, '{"length": "Midi", "fabric": "Viscose", "sleeve": "Three Quarter", "pattern": "Floral", "occasion": "Party", "neckline": "V-Neck"}', 4.6, 987);
+Products - Furniture
+sql
+INSERT INTO products (id, tenant_id, brand_id, category_id, sku, name, slug, short_description, long_description, base_price, discount_percent, stock_quantity, is_active, is_featured, has_variants, warranty_months, specifications, avg_rating, total_reviews) VALUES
+(16, 2, 15, 14, 'IKEA-SOFA-001', 'IKEA EKTORP 3-Seater Sofa', 'ikea-ektorp-3-seater-sofa', '3-seater sofa in beige', 'Comfortable 3-seater sofa with removable, washable cover.', 34999, 15, 10, true, true, true, 60, '{"seater": "3", "filling": "High-resilience foam", "cover": "Cotton", "assembly": "Required", "weight": "45kg"}', 4.3, 234),
+(17, 2, 15, 14, 'IKEA-SOFA-002', 'IKEA KIVIK 2-Seater Sofa', 'ikea-kivik-2-seater-sofa', '2-seater sofa in dark gray', 'Deep, comfortable sofa with chaise lounge option.', 28999, 10, 15, true, false, true, 60, '{"seater": "2", "filling": "Pocket springs + foam", "cover": "Polyester", "assembly": "Required", "weight": "38kg"}', 4.2, 176),
+(18, 2, 16, 15, 'URBAN-BED-001', 'Urban Ladder Oxen King Size Bed', 'urban-ladder-oxen-king-size-bed', 'King size bed in walnut finish', 'Solid wood bed with storage option.', 45999, 20, 8, true, true, true, 24, '{"size": "King", "material": "Sheesham Wood", "storage": "Hydraulic", "finish": "Walnut", "assembly": "Required"}', 4.5, 345),
+(19, 2, 17, 15, 'PEPPERFRY-BED-001', 'Pepperfry Julian Queen Size Bed', 'pepperfry-julian-queen-size-bed', 'Queen size bed in white finish', 'Elegant queen size bed with upholstered headboard.', 32999, 12, 12, true, false, false, 24, '{"size": "Queen", "material": "Engineered Wood", "storage": "No", "finish": "White", "assembly": "Required"}', 4.1, 156);
+Product Variants
+Variant Types and Values
+sql
+INSERT INTO product_variant_types (id, name, display_name, data_type) VALUES
+(1, 'Color', 'Color', 'string'),
+(2, 'Size', 'Size', 'string'),
+(3, 'Storage', 'Storage', 'string'),
+(4, 'RAM', 'RAM', 'string');
+
+INSERT INTO product_variant_values (id, variant_type_id, value, display_value, swatch_image_url) VALUES
+-- Colors
+(1, 1, 'Hot Pink', 'Hot Pink', '/images/swatches/hot-pink.png'),
+(2, 1, 'Onyx Black', 'Onyx Black', '/images/swatches/black.png'),
+(3, 1, 'Flowy Emerald', 'Flowy Emerald', '/images/swatches/emerald.png'),
+(4, 1, 'Natural Titanium', 'Natural Titanium', '/images/swatches/titanium.png'),
+(5, 1, 'Titanium Gray', 'Titanium Gray', '/images/swatches/gray.png'),
+(6, 1, 'Space Black', 'Space Black', '/images/swatches/space-black.png'),
+(7, 1, 'Navy Blue', 'Navy Blue', '/images/swatches/navy.png'),
+(8, 1, 'White', 'White', '/images/swatches/white.png'),
+(9, 1, 'Dark Blue', 'Dark Blue', '/images/swatches/dark-blue.png'),
+(10, 1, 'Black', 'Black', '/images/swatches/black.png'),
+(11, 1, 'Beige', 'Beige', '/images/swatches/beige.png'),
+(12, 1, 'Dark Gray', 'Dark Gray', '/images/swatches/dark-gray.png'),
+(13, 1, 'Walnut', 'Walnut', '/images/swatches/walnut.png'),
+(14, 1, 'White', 'White', '/images/swatches/white.png'),
+
+-- Sizes
+(15, 2, 'S', 'Small', NULL),
+(16, 2, 'M', 'Medium', NULL),
+(17, 2, 'L', 'Large', NULL),
+(18, 2, 'XL', 'Extra Large', NULL),
+(19, 2, 'XXL', 'Double Extra Large', NULL),
+(20, 2, '28', '28', NULL),
+(21, 2, '30', '30', NULL),
+(22, 2, '32', '32', NULL),
+(23, 2, '34', '34', NULL),
+(24, 2, '36', '36', NULL),
+
+-- Storage
+(25, 3, '64GB', '64 GB', NULL),
+(26, 3, '128GB', '128 GB', NULL),
+(27, 3, '256GB', '256 GB', NULL),
+(28, 3, '512GB', '512 GB', NULL),
+(29, 3, '1TB', '1 TB', NULL),
+
+-- RAM
+(30, 4, '4GB', '4 GB', NULL),
+(31, 4, '6GB', '6 GB', NULL),
+(32, 4, '8GB', '8 GB', NULL),
+(33, 4, '12GB', '12 GB', NULL),
+(34, 4, '16GB', '16 GB', NULL),
+(35, 4, '32GB', '32 GB', NULL);
+Product Variants
+sql
+INSERT INTO product_variants (id, product_id, variant_value_id, sku, price_adjustment, stock_quantity, image_url, is_active) VALUES
+-- Xiaomi 14 CIVI variants
+(1, 1, 1, 'XIAOMI-14-CIVI-PINK-512', 0, 25, '/images/products/xiaomi-14-pink.jpg', true),
+(2, 1, 2, 'XIAOMI-14-CIVI-BLACK-512', 0, 25, '/images/products/xiaomi-14-black.jpg', true),
+
+-- Redmi 8 variants
+(3, 2, 2, 'REDMI-8-BLACK-64', 0, 100, '/images/products/redmi-8-black.jpg', true),
+(4, 2, 7, 'REDMI-8-BLUE-64', 0, 100, '/images/products/redmi-8-blue.jpg', true),
+
+-- Levi''s Shirt variants (size)
+(5, 10, 15, 'LEVIS-SHIRT-001-S', 0, 25, '/images/products/levis-shirt-s.jpg', true),
+(6, 10, 16, 'LEVIS-SHIRT-001-M', 0, 40, '/images/products/levis-shirt-m.jpg', true),
+(7, 10, 17, 'LEVIS-SHIRT-001-L', 0, 40, '/images/products/levis-shirt-l.jpg', true),
+(8, 10, 18, 'LEVIS-SHIRT-001-XL', 0, 25, '/images/products/levis-shirt-xl.jpg', true),
+
+-- Levi''s Jeans variants (waist size)
+(9, 12, 20, 'LEVIS-JEANS-001-28', 0, 30, '/images/products/levis-jeans-28.jpg', true),
+(10, 12, 21, 'LEVIS-JEANS-001-30', 0, 45, '/images/products/levis-jeans-30.jpg', true),
+(11, 12, 22, 'LEVIS-JEANS-001-32', 0, 50, '/images/products/levis-jeans-32.jpg', true),
+(12, 12, 23, 'LEVIS-JEANS-001-34', 0, 35, '/images/products/levis-jeans-34.jpg', true),
+(13, 12, 24, 'LEVIS-JEANS-001-36', 0, 20, '/images/products/levis-jeans-36.jpg', true),
+
+-- IKEA Sofa variants (color)
+(14, 16, 11, 'IKEA-SOFA-001-BEIGE', 0, 5, '/images/products/ikea-sofa-beige.jpg', true),
+(15, 16, 12, 'IKEA-SOFA-001-GRAY', 0, 5, '/images/products/ikea-sofa-gray.jpg', true);
+Product Images
+sql
+INSERT INTO product_images (id, product_id, variant_id, image_url, thumbnail_url, medium_url, large_url, alt_text, display_order, is_primary) VALUES
+-- Xiaomi 14 CIVI images
+(1, 1, 1, '/images/products/xiaomi-14-pink-1.jpg', '/images/products/thumb/xiaomi-14-pink-1.jpg', '/images/products/medium/xiaomi-14-pink-1.jpg', '/images/products/large/xiaomi-14-pink-1.jpg', 'Xiaomi 14 CIVI Hot Pink - Front', 1, true),
+(2, 1, 1, '/images/products/xiaomi-14-pink-2.jpg', '/images/products/thumb/xiaomi-14-pink-2.jpg', '/images/products/medium/xiaomi-14-pink-2.jpg', '/images/products/large/xiaomi-14-pink-2.jpg', 'Xiaomi 14 CIVI Hot Pink - Back', 2, false),
+(3, 1, 1, '/images/products/xiaomi-14-pink-3.jpg', '/images/products/thumb/xiaomi-14-pink-3.jpg', '/images/products/medium/xiaomi-14-pink-3.jpg', '/images/products/large/xiaomi-14-pink-3.jpg', 'Xiaomi 14 CIVI Hot Pink - Camera', 3, false),
+
+-- Levi''s Shirt images
+(4, 10, 5, '/images/products/levis-shirt-blue-1.jpg', '/images/products/thumb/levis-shirt-blue-1.jpg', '/images/products/medium/levis-shirt-blue-1.jpg', '/images/products/large/levis-shirt-blue-1.jpg', 'Levi''s Blue Check Shirt - Front', 1, true),
+(5, 10, 5, '/images/products/levis-shirt-blue-2.jpg', '/images/products/thumb/levis-shirt-blue-2.jpg', '/images/products/medium/levis-shirt-blue-2.jpg', '/images/products/large/levis-shirt-blue-2.jpg', 'Levi''s Blue Check Shirt - Back', 2, false),
+(6, 10, 5, '/images/products/levis-shirt-blue-3.jpg', '/images/products/thumb/levis-shirt-blue-3.jpg', '/images/products/medium/levis-shirt-blue-3.jpg', '/images/products/large/levis-shirt-blue-3.jpg', 'Levi''s Blue Check Shirt - Model', 3, false),
+
+-- IKEA Sofa images
+(7, 16, 14, '/images/products/ikea-sofa-beige-1.jpg', '/images/products/thumb/ikea-sofa-beige-1.jpg', '/images/products/medium/ikea-sofa-beige-1.jpg', '/images/products/large/ikea-sofa-beige-1.jpg', 'IKEA EKTORP Beige Sofa - Front', 1, true),
+(8, 16, 14, '/images/products/ikea-sofa-beige-2.jpg', '/images/products/thumb/ikea-sofa-beige-2.jpg', '/images/products/medium/ikea-sofa-beige-2.jpg', '/images/products/large/ikea-sofa-beige-2.jpg', 'IKEA EKTORP Beige Sofa - Side', 2, false),
+(9, 16, 14, '/images/products/ikea-sofa-beige-3.jpg', '/images/products/thumb/ikea-sofa-beige-3.jpg', '/images/products/medium/ikea-sofa-beige-3.jpg', '/images/products/large/ikea-sofa-beige-3.jpg', 'IKEA EKTORP Beige Sofa - Detail', 3, false);
+Product Filter Values
+sql
+INSERT INTO product_filter_values (id, product_id, filter_attribute_id, value_text, value_number, value_boolean) VALUES
+-- Xiaomi 14 CIVI filters
+(1, 1, 1, NULL, 12, NULL), -- RAM
+(2, 1, 2, NULL, 512, NULL), -- Storage
+(3, 1, 3, 'Snapdragon 8s Gen 3', NULL, NULL), -- Processor
+(4, 1, 4, NULL, 50, NULL), -- Camera
+(5, 1, 5, NULL, 4700, NULL), -- Battery
+(6, 1, 6, NULL, 6.55, NULL), -- Screen Size
+(7, 1, 7, NULL, NULL, true), -- 5G Support
+
+-- Redmi 8 filters
+(8, 2, 1, NULL, 4, NULL),
+(9, 2, 2, NULL, 64, NULL),
+(10, 2, 3, 'Snapdragon 439', NULL, NULL),
+(11, 2, 4, NULL, 12, NULL),
+(12, 2, 5, NULL, 5000, NULL),
+(13, 2, 6, NULL, 6.22, NULL),
+(14, 2, 7, NULL, NULL, false),
+
+-- Levi''s Shirt filters
+(15, 10, 9, 'Navy Blue', NULL, NULL),
+(16, 10, 10, 'M', NULL, NULL),
+(17, 10, 11, 'Cotton', NULL, NULL),
+(18, 10, 13, 'Full Sleeve', NULL, NULL),
+(19, 10, 14, 'Checked', NULL, NULL),
+(20, 10, 15, '100% Cotton', NULL, NULL),
+
+-- IKEA Sofa filters
+(21, 16, 9, 'Beige', NULL, NULL),
+(22, 16, 11, 'Cotton/Polyester', NULL, NULL),
+(23, 16, 16, '3 Seater', NULL, NULL),
+(24, 16, 17, NULL, NULL, true);
+Users Data
+sql
+INSERT INTO users (id, email, phone, first_name, last_name, is_phone_verified, is_email_verified, profile_pic_url, preferred_language, is_active) VALUES
+(1, 'rahul.sharma@gmail.com', '9876543210', 'Rahul', 'Sharma', true, true, '/images/users/rahul.jpg', 'en', true),
+(2, 'priya.patel@yahoo.com', '9876543211', 'Priya', 'Patel', true, true, '/images/users/priya.jpg', 'en', true),
+(3, 'amit.kumar@rediffmail.com', '9876543212', 'Amit', 'Kumar', true, false, '/images/users/amit.jpg', 'hi', true),
+(4, 'neha.singh@gmail.com', '9876543213', 'Neha', 'Singh', true, true, '/images/users/neha.jpg', 'en', true),
+(5, 'vikram.mehta@outlook.com', '9876543214', 'Vikram', 'Mehta', false, true, '/images/users/vikram.jpg', 'en', true),
+(6, 'anjali.desaigmail.com', '9876543215', 'Anjali', 'Desai', true, true, '/images/users/anjali.jpg', 'gu', true),
+(7, 'rajesh.khanna@gmail.com', '9876543216', 'Rajesh', 'Khanna', true, true, '/images/users/rajesh.jpg', 'en', true),
+(8, 'pooja.joshi@yahoo.com', '9876543217', 'Pooja', 'Joshi', true, true, '/images/users/pooja.jpg', 'en', true),
+(9, 'suresh.iyer@gmail.com', '9876543218', 'Suresh', 'Iyer', true, false, '/images/users/suresh.jpg', 'ta', true),
+(10, 'kavita.reddy@outlook.com', '9876543219', 'Kavita', 'Reddy', true, true, '/images/users/kavita.jpg', 'te', true);
+User Addresses
+sql
+INSERT INTO user_addresses (id, user_id, address_type, recipient_name, recipient_phone, address_line1, address_line2, landmark, city, state, pincode, is_default) VALUES
+(1, 1, 'home', 'Rahul Sharma', '9876543210', 'A-201, Green Acres Apartments', 'Andheri East', 'Near Marol Metro Station', 'Mumbai', 'Maharashtra', '400093', true),
+(2, 1, 'work', 'Rahul Sharma', '9876543210', 'Tech Park, 5th Floor', 'SEEPZ', 'Near Mindspace', 'Mumbai', 'Maharashtra', '400096', false),
+(3, 2, 'home', 'Priya Patel', '9876543211', '42, Sunrise Society', 'Satellite Road', 'Near Star Bazaar', 'Ahmedabad', 'Gujarat', '380015', true),
+(4, 3, 'home', 'Amit Kumar', '9876543212', 'C-45, Lajpat Nagar', 'Part 2', 'Near Axis Bank', 'Delhi', 'Delhi', '110024', true),
+(5, 4, 'home', 'Neha Singh', '9876543213', '204, Rainbow Apartments', 'Koramangala', 'Near Sony Signal', 'Bengaluru', 'Karnataka', '560034', true),
+(6, 4, 'work', 'Neha Singh', '9876543213', 'Embassy Tech Village', '6th Floor, Wing B', 'Near Sarjapur Road', 'Bengaluru', 'Karnataka', '560103', false),
+(7, 5, 'home', 'Vikram Mehta', '9876543214', '12, Lake View Road', 'T Nagar', 'Near Pondy Bazaar', 'Chennai', 'Tamil Nadu', '600017', true),
+(8, 6, 'home', 'Anjali Desai', '9876543215', '7, Shivam Society', 'Navrangpura', 'Near HL College', 'Ahmedabad', 'Gujarat', '380009', true),
+(9, 7, 'home', 'Rajesh Khanna', '9876543216', 'F-34, Model Town', 'Phase 2', 'Near Post Office', 'Delhi', 'Delhi', '110009', true),
+(10, 8, 'home', 'Pooja Joshi', '9876543217', '8, Shanti Niketan', 'Bibwewadi', 'Near Market Yard', 'Pune', 'Maharashtra', '411037', true),
+(11, 9, 'home', 'Suresh Iyer', '9876543218', '34, Krishna Nagar', 'Adyar', 'Near Police Station', 'Chennai', 'Tamil Nadu', '600020', true),
+(12, 10, 'home', 'Kavita Reddy', '9876543219', '4-5-6, Jubilee Hills', 'Road No. 10', 'Near Shilparamam', 'Hyderabad', 'Telangana', '500033', true);
+Cart Data
+sql
+INSERT INTO cart (id, user_id, total_items, subtotal, discount_total, tax_total, grand_total, is_active) VALUES
+(1, 1, 3, 89996, 20000, 10499, 80495, true),
+(2, 2, 1, 10999, 0, 1759, 12758, true),
+(3, 3, 2, 23498, 2000, 3439, 24937, true),
+(4, 4, 0, 0, 0, 0, 0, true),
+(5, 5, 4, 35995, 5000, 4959, 35954, true);
+
+INSERT INTO cart_items (id, cart_id, product_id, variant_id, quantity, unit_price, total_price) VALUES
+(1, 1, 1, 1, 1, 59999, 59999),
+(2, 1, 10, 5, 2, 2499, 4998),
+(3, 1, 12, 9, 1, 3999, 3999),
+(4, 2, 2, 3, 1, 10999, 10999),
+(5, 3, 11, 6, 1, 2999, 2999),
+(6, 3, 13, 10, 1, 5499, 5499),
+(7, 5, 18, NULL, 1, 45999, 45999),
+(8, 5, 14, NULL, 2, 3299, 6598),
+(9, 5, 6, NULL, 1, 199900, 199900);
+Wishlist Data
+sql
+INSERT INTO wishlist (id, user_id, product_id, variant_id) VALUES
+(1, 1, 3, 2),
+(2, 1, 5, NULL),
+(3, 2, 1, 1),
+(4, 2, 8, NULL),
+(5, 3, 12, 11),
+(6, 3, 16, 14),
+(7, 4, 4, NULL),
+(8, 4, 9, NULL),
+(9, 5, 7, NULL),
+(10, 5, 17, 15),
+(11, 6, 10, 6),
+(12, 6, 14, NULL),
+(13, 7, 2, 3),
+(14, 7, 11, 7),
+(15, 8, 13, 12);
+CMS Data - Banners
+sql
+INSERT INTO banner_positions (id, name, code, description, max_banners) VALUES
+(1, 'Homepage Main Carousel', 'homepage_main', 'Main carousel on homepage', 5),
+(2, 'Category Page Top', 'category_top', 'Top banner on category pages', 3),
+(3, 'Festival Special', 'festival_special', 'Festival season banners', 8),
+(4, 'Product Page Bottom', 'product_bottom', 'Banner below product details', 2),
+(5, 'Mobile App Splash', 'app_splash', 'Mobile app splash screen banners', 3);
+
+INSERT INTO banners (id, tenant_id, position_id, title, subtitle, description, image_desktop, image_tablet, image_mobile, cta_text, cta_link, cta_type, cta_target_id, display_order, is_active, start_date, end_date, festival_tags) VALUES
+-- Diwali Sale Banners
+(1, 4, 1, 'Diwali Sale 2024', 'Light up your celebrations', 'Up to 70% off on electronics', '/images/banners/diwali-electronics-desktop.jpg', '/images/banners/diwali-electronics-tablet.jpg', '/images/banners/diwali-electronics-mobile.jpg', 'Shop Now', '/electronics', 'category', 1, 1, true, '2024-10-20 00:00:00', '2024-11-15 23:59:59', '["diwali", "festival", "electronics"]'),
+(2, 4, 1, 'iPhone 15 Pro', 'Pro. Beyond.', 'Get up to ₹8000 off on exchange', '/images/banners/iphone15-desktop.jpg', '/images/banners/iphone15-tablet.jpg', '/images/banners/iphone15-mobile.jpg', 'Pre-order Now', '/product/4', 'product', 4, 2, true, '2024-09-15 00:00:00', '2024-10-31 23:59:59', '["new_launch", "apple"]'),
+(3, 3, 3, 'Festive Fashion', 'Dress up for the celebrations', 'Min 50% off on ethnic wear', '/images/banners/fashion-festive-desktop.jpg', '/images/banners/fashion-festive-tablet.jpg', '/images/banners/fashion-festive-mobile.jpg', 'Explore Now', '/fashion', 'category', 7, 3, true, '2024-10-01 00:00:00', '2024-11-10 23:59:59', '["diwali", "festival", "fashion"]'),
+(4, 2, 2, 'Home Makeover Sale', 'New home, new beginnings', 'Up to 40% off on furniture', '/images/banners/furniture-sale-desktop.jpg', '/images/banners/furniture-sale-tablet.jpg', '/images/banners/furniture-sale-mobile.jpg', 'Shop Furniture', '/furniture', 'category', 13, 1, true, '2024-10-15 00:00:00', '2024-11-30 23:59:59', '["diwali", "home"]'),
+(5, 4, 5, 'Big Billion Days', 'The biggest sale of the year', 'Unbeatable deals on top brands', '/images/banners/bbd-desktop.jpg', '/images/banners/bbd-tablet.jpg', '/images/banners/bbd-mobile.jpg', 'Explore Deals', '/offers', 'collection', NULL, 1, true, '2024-09-23 00:00:00', '2024-10-10 23:59:59', '["big_sale", "festival"]'),
+(6, 3, 3, 'Summer Style Guide', 'Beat the heat in style', 'Fresh summer arrivals', '/images/banners/summer-fashion-desktop.jpg', '/images/banners/summer-fashion-tablet.jpg', '/images/banners/summer-fashion-mobile.jpg', 'Shop Summer', '/fashion/summer', 'category', 7, 4, false, '2024-03-01 00:00:00', '2024-05-31 23:59:59', '["summer"]'),
+(7, 4, 2, 'Samsung TV Days', 'Cinema at home', 'Up to 30% off on QLED TVs', '/images/banners/samsung-tv-desktop.jpg', '/images/banners/samsung-tv-tablet.jpg', '/images/banners/samsung-tv-mobile.jpg', 'Buy Now', '/product/8', 'product', 8, 1, true, '2024-10-01 00:00:00', '2024-10-31 23:59:59', '["electronics", "samsung"]');
+Hero Sections
+sql
+INSERT INTO hero_sections (id, tenant_id, name, section_code, layout_type, grid_config, is_active, display_order) VALUES
+(1, 4, 'Electronics Hero', 'electronics_hero', 'grid_2x2', '{"rows": 2, "columns": 2, "gutter": 16}', true, 1),
+(2, 3, 'Fashion Hero', 'fashion_hero', 'carousel', '{"autoplay": true, "interval": 5000}', true, 1),
+(3, 2, 'Furniture Hero', 'furniture_hero', 'grid_3x1', '{"rows": 1, "columns": 3, "gutter": 12}', true, 1),
+(4, 4, 'Mobile Phones Hero', 'mobiles_hero', 'featured', '{"featured_size": "large", "thumbnails": 4}', true, 2);
+
+INSERT INTO hero_items (id, hero_section_id, title, subtitle, image_desktop, image_tablet, image_mobile, link_type, link_target_id, display_order, is_active) VALUES
+(1, 1, 'New Smartphones', 'Flagship phones starting ₹29,999', '/images/hero/electronics-1-desktop.jpg', '/images/hero/electronics-1-tablet.jpg', '/images/hero/electronics-1-mobile.jpg', 'category', 5, 1, true),
+(2, 1, 'Gaming Laptops', 'RTX 40 series laptops', '/images/hero/electronics-2-desktop.jpg', '/images/hero/electronics-2-tablet.jpg', '/images/hero/electronics-2-mobile.jpg', 'category', 3, 2, true),
+(3, 1, '4K Smart TVs', 'Cinema experience at home', '/images/hero/electronics-3-desktop.jpg', '/images/hero/electronics-3-tablet.jpg', '/images/hero/electronics-3-mobile.jpg', 'category', 4, 3, true),
+(4, 1, 'Audio Sale', 'Up to 50% off on headphones', '/images/hero/electronics-4-desktop.jpg', '/images/hero/electronics-4-tablet.jpg', '/images/hero/electronics-4-mobile.jpg', 'category', 6, 4, true),
+(5, 2, 'Men''s Fashion', 'Latest collection', '/images/hero/fashion-1-desktop.jpg', '/images/hero/fashion-1-tablet.jpg', '/images/hero/fashion-1-mobile.jpg', 'category', 8, 1, true),
+(6, 2, 'Women''s Ethnic', 'Festival special', '/images/hero/fashion-2-desktop.jpg', '/images/hero/fashion-2-tablet.jpg', '/images/hero/fashion-2-mobile.jpg', 'category', 9, 2, true),
+(7, 2, 'Footwear Sale', 'Min 40% off', '/images/hero/fashion-3-desktop.jpg', '/images/hero/fashion-3-tablet.jpg', '/images/hero/fashion-3-mobile.jpg', 'category', 11, 3, true),
+(8, 3, 'Living Room', 'Sofas starting ₹14,999', '/images/hero/furniture-1-desktop.jpg', '/images/hero/furniture-1-tablet.jpg', '/images/hero/furniture-1-mobile.jpg', 'category', 14, 1, true),
+(9, 3, 'Bedroom', 'Beds with storage', '/images/hero/furniture-2-desktop.jpg', '/images/hero/furniture-2-tablet.jpg', '/images/hero/furniture-2-mobile.jpg', 'category', 15, 2, true),
+(10, 3, 'Dining', 'Tables & chairs', '/images/hero/furniture-3-desktop.jpg', '/images/hero/furniture-3-tablet.jpg', '/images/hero/furniture-3-mobile.jpg', 'category', 13, 3, true);
+Grid Sections
+sql
+INSERT INTO grid_sections (id, tenant_id, name, section_code, section_type, layout_template, title, subtitle, view_all_link, is_active, display_order, theme_config) VALUES
+(1, 4, 'Deals of the Day', 'deals_of_day', 'product_grid', 'grid_4', 'Deals of the Day', 'Limited period offers', '/deals', true, 1, '{"background": "#f5f5f5", "title_color": "#212121"}'),
+(2, 4, 'Best of Electronics', 'best_electronics', 'product_grid', 'carousel', 'Best of Electronics', 'Top rated products', '/electronics/best', true, 2, '{"background": "white", "title_color": "#2874f0"}'),
+(3, 3, 'Trending in Fashion', 'trending_fashion', 'product_grid', 'grid_5', 'Trending Now', 'Most loved styles', '/fashion/trending', true, 1, '{"background": "#fafafa", "title_color": "#333"}'),
+(4, 2, 'Furniture Bestsellers', 'furniture_bestsellers', 'product_grid', 'grid_4', 'Bestselling Furniture', 'Most popular picks', '/furniture/bestsellers', true, 1, '{"background": "#fff4e6", "title_color": "#b85e00"}'),
+(5, 4, 'Recommended for You', 'recommended', 'product_grid', 'grid_4', 'Recommended for You', 'Based on your browsing', '/recommendations', true, 3, '{"background": "white", "title_color": "#212121"}'),
+(6, 3, 'Shop by Budget', 'shop_by_budget', 'category_grid', 'grid_5', 'Shop by Budget', 'Find your perfect fit', NULL, true, 2, '{"background": "#e8f5e8", "title_color": "#2e7d32"}');
+
+INSERT INTO grid_section_items (id, grid_section_id, item_type, item_id, custom_data, image_url, title, subtitle, display_order, is_active) VALUES
+-- Deals of the Day
+(1, 1, 'product', 1, NULL, '/images/grid/xiaomi-14.jpg', 'Xiaomi 14 CIVI', '38% off', 1, true),
+(2, 1, 'product', 2, NULL, '/images/grid/redmi-8.jpg', 'Redmi 8', 'Special price', 2, true),
+(3, 1, 'product', 5, NULL, '/images/grid/samsung-s24.jpg', 'Samsung S24 Ultra', '12% off', 3, true),
+(4, 1, 'product', 3, NULL, '/images/grid/oneplus-12.jpg', 'OnePlus 12', '15% off', 4, true),
+
+-- Best of Electronics
+(5, 2, 'product', 6, NULL, '/images/grid/macbook.jpg', 'MacBook Pro', 'M3 Pro chip', 1, true),
+(6, 2, 'product', 8, NULL, '/images/grid/samsung-tv.jpg', 'Samsung Neo QLED', '20% off', 2, true),
+(7, 2, 'product', 4, NULL, '/images/grid/iphone-15.jpg', 'iPhone 15 Pro', 'Just launched', 3, true),
+(8, 2, 'product', 7, NULL, '/images/grid/galaxy-book.jpg', 'Galaxy Book3 Ultra', 'Premium laptop', 4, true),
+
+-- Trending in Fashion
+(9, 3, 'product', 10, NULL, '/images/grid/levis-shirt.jpg', 'Levi''s Check Shirt', '30% off', 1, true),
+(10, 3, 'product', 12, NULL, '/images/grid/levis-jeans.jpg', 'Levi''s 511 Jeans', '20% off', 2, true),
+(11, 3, 'product', 14, NULL, '/images/grid/adidas-dress.jpg', 'Adidas Sports Dress', 'New arrival', 3, true),
+(12, 3, 'product', 15, NULL, '/images/grid/zara-dress.jpg', 'ZARA Floral Dress', 'Limited stock', 4, true),
+
+-- Furniture Bestsellers
+(13, 4, 'product', 16, NULL, '/images/grid/ikea-sofa.jpg', 'IKEA EKTORP Sofa', '3-seater', 1, true),
+(14, 4, 'product', 18, NULL, '/images/grid/urban-bed.jpg', 'Urban Ladder Oxen Bed', 'King size', 2, true),
+(15, 4, 'product', 17, NULL, '/images/grid/ikea-sofa-2.jpg', 'IKEA KIVIK Sofa', 'With chaise', 3, true),
+
+-- Shop by Budget (Categories)
+(16, 6, 'category', 5, '{"min_price": 10000, "max_price": 20000}', '/images/budget/mobile-budget.jpg', 'Mobiles under ₹20,000', '100+ options', 1, true),
+(17, 6, 'category', 10, '{"min_price": 0, "max_price": 1000}', '/images/budget/shirt-budget.jpg', 'Shirts under ₹1,000', '50+ styles', 2, true),
+(18, 6, 'category', 14, '{"min_price": 15000, "max_price": 30000}', '/images/budget/sofa-budget.jpg', 'Sofas under ₹30,000', '20+ designs', 3, true),
+(19, 6, 'category', 3, '{"min_price": 50000, "max_price": 100000}', '/images/budget/laptop-budget.jpg', 'Laptops ₹50k-1L', 'Gaming & work', 4, true);
+User Activities (For Personalization)
+sql
+INSERT INTO user_activities (id, user_id, activity_type, entity_type, entity_id, search_query, metadata, created_at) VALUES
+-- Rahul Sharma (User 1)
+(1, 1, 'view', 'product', 1, NULL, '{"source": "homepage", "duration": 45}', NOW() - INTERVAL '2 days'),
+(2, 1, 'view', 'product', 3, NULL, '{"source": "search", "duration": 30}', NOW() - INTERVAL '2 days'),
+(3, 1, 'search', NULL, NULL, 'iPhone 15', '{"results_count": 15}', NOW() - INTERVAL '1 day'),
+(4, 1, 'view', 'product', 4, NULL, '{"source": "search", "duration": 60}', NOW() - INTERVAL '1 day'),
+(5, 1, 'cart_add', 'product', 1, NULL, '{"variant_id": 1, "quantity": 1}', NOW() - INTERVAL '12 hours'),
+(6, 1, 'view', 'category', 5, NULL, '{"source": "navigation"}', NOW() - INTERVAL '6 hours'),
+
+-- Priya Patel (User 2)
+(7, 2, 'view', 'product', 10, NULL, '{"source": "category", "duration": 25}', NOW() - INTERVAL '3 days'),
+(8, 2, 'view', 'product', 12, NULL, '{"source": "recommendation", "duration": 40}', NOW() - INTERVAL '3 days'),
+(9, 2, 'wishlist', 'product', 12, NULL, '{"variant_id": 11}', NOW() - INTERVAL '2 days'),
+(10, 2, 'search', NULL, NULL, 'ethnic wear diwali', '{"results_count": 45}', NOW() - INTERVAL '1 day'),
+(11, 2, 'view', 'product', 14, NULL, '{"source": "search", "duration": 35}', NOW() - INTERVAL '1 day'),
+
+-- Amit Kumar (User 3)
+(12, 3, 'view', 'product', 16, NULL, '{"source": "category", "duration": 55}', NOW() - INTERVAL '5 days'),
+(13, 3, 'view', 'product', 18, NULL, '{"source": "related", "duration": 50}', NOW() - INTERVAL '4 days'),
+(14, 3, 'search', NULL, NULL, 'king size bed with storage', '{"results_count": 23}', NOW() - INTERVAL '3 days'),
+(15, 3, 'cart_add', 'product', 18, NULL, '{"quantity": 1}', NOW() - INTERVAL '2 days'),
+(16, 3, 'view', 'category', 15, NULL, '{"source": "navigation"}', NOW() - INTERVAL '1 day'),
+
+-- Neha Singh (User 4)
+(17, 4, 'view', 'product', 6, NULL, '{"source": "homepage", "duration": 65}', NOW() - INTERVAL '1 day'),
+(18, 4, 'view', 'product', 7, NULL, '{"source": "compare", "duration": 40}', NOW() - INTERVAL '1 day'),
+(19, 4, 'search', NULL, NULL, 'laptop for programming', '{"results_count": 32}', NOW() - INTERVAL '12 hours'),
+
+-- Vikram Mehta (User 5)
+(20, 5, 'view', 'product', 2, NULL, '{"source": "deal", "duration": 20}', NOW() - INTERVAL '2 hours'),
+(21, 5, 'view', 'product', 8, NULL, '{"source": "category", "duration": 45}', NOW() - INTERVAL '1 hour'),
+(22, 5, 'search', NULL, NULL, '4k tv 55 inch', '{"results_count": 18}', NOW() - INTERVAL '30 minutes');
+Reviews Data
+sql
+INSERT INTO reviews (id, product_id, user_id, rating, title, content, pros, cons, is_verified_purchase, helpful_count, not_helpful_count, status, created_at) VALUES
+-- Xiaomi 14 CIVI Reviews
+(1, 1, 2, 5, 'Excellent phone with great camera', 'The camera quality is outstanding. Battery life is good too.', 'Camera, Performance, Display', 'Slightly heavy', true, 45, 2, 'approved', NOW() - INTERVAL '15 days'),
+(2, 1, 5, 4, 'Good phone but heating issue', 'Overall good phone but heats up during gaming.', 'Fast charging, Smooth UI', 'Heating issue', true, 23, 5, 'approved', NOW() - INTERVAL '10 days'),
+(3, 1, 7, 4, 'Value for money', 'Great features at this price point.', 'Display, Speed', 'Battery could be better', false, 12, 1, 'approved', NOW() - INTERVAL '5 days'),
+
+-- Redmi 8 Reviews
+(4, 2, 3, 5, 'Best budget phone', 'Using since 6 months, no issues. Battery is amazing.', 'Battery, Price', 'Camera average', true, 234, 12, 'approved', NOW() - INTERVAL '30 days'),
+(5, 2, 8, 4, 'Good for daily use', 'Perfect for basic usage and great battery backup.', 'Battery life, Display', 'Processor could be better', true, 156, 8, 'approved', NOW() - INTERVAL '25 days'),
+(6, 2, 9, 3, 'Average phone', 'Nothing special but gets the job done.', 'Build quality', 'Slow charging, Camera', true, 67, 15, 'approved', NOW() - INTERVAL '20 days'),
+
+-- Levi''s Shirt Reviews
+(7, 10, 4, 5, 'Perfect fit!', 'The shirt fits perfectly and fabric is high quality.', 'Fit, Fabric, Color', 'None', true, 45, 2, 'approved', NOW() - INTERVAL '12 days'),
+(8, 10, 6, 4, 'Good casual shirt', 'Nice color and comfortable material.', 'Comfort, Design', 'Slightly expensive', true, 23, 1, 'approved', NOW() - INTERVAL '8 days'),
+
+-- Levi''s Jeans Reviews
+(9, 12, 1, 5, 'Classic Levi''s quality', 'My go-to jeans. Very comfortable and durable.', 'Fit, Stretch, Quality', 'Price high', true, 67, 3, 'approved', NOW() - INTERVAL '20 days'),
+(10, 12, 10, 5, 'Perfect slim fit', 'Exactly what I was looking for. Great stretch.', 'Comfort, Style', 'None', true, 34, 2, 'approved', NOW() - INTERVAL '15 days'),
+
+-- IKEA Sofa Reviews
+(11, 16, 3, 4, 'Comfortable sofa', 'Very comfortable and looks great in living room.', 'Comfort, Design', 'Assembly takes time', true, 23, 1, 'approved', NOW() - INTERVAL '45 days'),
+(12, 16, 5, 5, 'Worth the money', 'Excellent quality and very sturdy.', 'Quality, Comfort', 'None', true, 18, 0, 'approved', NOW() - INTERVAL '30 days');
+Review Images
+sql
+INSERT INTO review_images (id, review_id, image_url) VALUES
+(1, 1, '/images/reviews/xiaomi-14-review-1.jpg'),
+(2, 1, '/images/reviews/xiaomi-14-review-2.jpg'),
+(3, 4, '/images/reviews/redmi-8-review-1.jpg'),
+(4, 7, '/images/reviews/levis-shirt-review-1.jpg'),
+(5, 9, '/images/reviews/levis-jeans-review-1.jpg'),
+(6, 11, '/images/reviews/ikea-sofa-review-1.jpg');
+Orders Data
+sql
+INSERT INTO orders (id, order_number, user_id, address_id, order_status, payment_status, payment_method, subtotal, discount_total, tax_total, shipping_total, grand_total, coupon_code, coupon_discount, placed_at) VALUES
+(1, 'ORD-2024-1001', 1, 1, 'delivered', 'paid', 'UPI', 73497, 5000, 10949, 0, 79446, 'DIWALI200', 200, NOW() - INTERVAL '25 days'),
+(2, 'ORD-2024-1002', 2, 3, 'delivered', 'paid', 'Credit Card', 10999, 0, 1759, 0, 12758, NULL, 0, NOW() - INTERVAL '20 days'),
+(3, 'ORD-2024-1003', 3, 4, 'shipped', 'paid', 'Debit Card', 23498, 2000, 3439, 0, 24937, 'FESTIVE10', 234, NOW() - INTERVAL '10 days'),
+(4, 'ORD-2024-1004', 4, 5, 'confirmed', 'paid', 'UPI', 199900, 10000, 30384, 0, 220284, NULL, 0, NOW() - INTERVAL '5 days'),
+(5, 'ORD-2024-1005', 5, 7, 'pending', 'pending', 'COD', 35995, 5000, 4959, 0, 35954, 'SAVE500', 500, NOW() - INTERVAL '1 day'),
+(6, 'ORD-2024-1006', 1, 2, 'delivered', 'paid', 'Net Banking', 2499, 300, 351, 50, 2600, 'WELCOME', 100, NOW() - INTERVAL '15 days'),
+(7, 'ORD-2024-1007', 6, 8, 'shipped', 'paid', 'UPI', 3299, 0, 527, 0, 3826, NULL, 0, NOW() - INTERVAL '7 days'),
+(8, 'ORD-2024-1008', 7, 9, 'cancelled', 'refunded', 'Credit Card', 5499, 500, 799, 0, 5798, 'FIRST', 200, NOW() - INTERVAL '3 days');
+
+INSERT INTO order_items (id, order_id, product_id, variant_id, quantity, unit_price, discount_amount, tax_amount, total_price, product_snapshot) VALUES
+(1, 1, 1, 1, 1, 59999, 5000, 8799, 63798, '{"name": "Xiaomi 14 CIVI", "brand": "Xiaomi", "sku": "XIAOMI-14-CIVI-PINK-512"}'),
+(2, 1, 10, 6, 1, 2499, 0, 399, 2898, '{"name": "Levi''s Men''s Regular Fit Check Shirt", "brand": "Levi''s", "sku": "LEVIS-SHIRT-001-M"}'),
+(3, 1, 12, 10, 1, 3999, 0, 639, 4638, '{"name": "Levi''s Men''s 511 Slim Fit Jeans", "brand": "Levi''s", "sku": "LEVIS-JEANS-001-30"}'),
+(4, 2, 2, 3, 1, 10999, 0, 1759, 12758, '{"name": "Redmi 8", "brand": "Xiaomi", "sku": "REDMI-8-BLACK-64"}'),
+(5, 3, 11, 7, 1, 2999, 1000, 319, 2318, '{"name": "Levi''s Men''s Slim Fit Formal Shirt", "brand": "Levi''s", "sku": "LEVIS-SHIRT-001-L"}'),
+(6, 3, 13, 12, 1, 5499, 1000, 719, 5218, '{"name": "Nike Men''s Tech Fleece Jogger Jeans", "brand": "Nike", "sku": "NIKE-JEANS-001-34"}'),
+(7, 4, 6, NULL, 1, 199900, 10000, 30384, 220284, '{"name": "MacBook Pro 14", "brand": "Apple", "sku": "MACBOOK-PRO-001"}'),
+(8, 5, 18, NULL, 1, 45999, 5000, 6559, 47558, '{"name": "Urban Ladder Oxen King Size Bed", "brand": "Urban Ladder", "sku": "URBAN-BED-001"}'),
+(9, 5, 14, NULL, 2, 3299, 0, 1055, 7653, '{"name": "Adidas Women''s Striped Sports Dress", "brand": "Adidas", "sku": "ADIDAS-DRESS-001"}'),
+(10, 6, 10, 5, 1, 2499, 300, 351, 2550, '{"name": "Levi''s Men''s Regular Fit Check Shirt", "brand": "Levi''s", "sku": "LEVIS-SHIRT-001-S"}'),
+(11, 7, 14, NULL, 1, 3299, 0, 527, 3826, '{"name": "Adidas Women''s Striped Sports Dress", "brand": "Adidas", "sku": "ADIDAS-DRESS-001"}'),
+(12, 8, 13, 11, 1, 5499, 500, 799, 5798, '{"name": "Nike Men''s Tech Fleece Jogger Jeans", "brand": "Nike", "sku": "NIKE-JEANS-001-32"}');
+Reset Sequences
+sql
+-- Reset all sequences to continue from max ID
+SELECT setval('tenants_id_seq', (SELECT MAX(id) FROM tenants));
+SELECT setval('categories_id_seq', (SELECT MAX(id) FROM categories));
+SELECT setval('brands_id_seq', (SELECT MAX(id) FROM brands));
+SELECT setval('filter_attributes_id_seq', (SELECT MAX(id) FROM filter_attributes));
+SELECT setval('products_id_seq', (SELECT MAX(id) FROM products));
+SELECT setval('product_variant_types_id_seq', (SELECT MAX(id) FROM product_variant_types));
+SELECT setval('product_variant_values_id_seq', (SELECT MAX(id) FROM product_variant_values));
+SELECT setval('product_variants_id_seq', (SELECT MAX(id) FROM product_variants));
+SELECT setval('product_images_id_seq', (SELECT MAX(id) FROM product_images));
+SELECT setval('product_filter_values_id_seq', (SELECT MAX(id) FROM product_filter_values));
+SELECT setval('users_id_seq', (SELECT MAX(id) FROM users));
+SELECT setval('user_addresses_id_seq', (SELECT MAX(id) FROM user_addresses));
+SELECT setval('cart_id_seq', (SELECT MAX(id) FROM cart));
+SELECT setval('cart_items_id_seq', (SELECT MAX(id) FROM cart_items));
+SELECT setval('wishlist_id_seq', (SELECT MAX(id) FROM wishlist));
+SELECT setval('banner_positions_id_seq', (SELECT MAX(id) FROM banner_positions));
+SELECT setval('banners_id_seq', (SELECT MAX(id) FROM banners));
+SELECT setval('hero_sections_id_seq', (SELECT MAX(id) FROM hero_sections));
+SELECT setval('hero_items_id_seq', (SELECT MAX(id) FROM hero_items));
+SELECT setval('grid_sections_id_seq', (SELECT MAX(id) FROM grid_sections));
+SELECT setval('grid_section_items_id_seq', (SELECT MAX(id) FROM grid_section_items));
+SELECT setval('user_activities_id_seq', (SELECT MAX(id) FROM user_activities));
+SELECT setval('reviews_id_seq', (SELECT MAX(id) FROM reviews));
+SELECT setval('review_images_id_seq', (SELECT MAX(id) FROM review_images));
+SELECT setval('orders_id_seq', (SELECT MAX(id) FROM orders));
+SELECT setval('order_items_id_seq', (SELECT MAX(id) FROM order_items));
+This comprehensive dummy data includes:
+
+4 tenants (marketplace, furniture, fashion, electronics)
+
+19 categories with hierarchical structure
+
+17 brands across different verticals
+
+19 products with detailed specifications
+
+35 product variants (colors, sizes, storage options)
+
+28 product images
+
+24 filter values for faceted search
+
+10 users with complete profiles
+
+12 addresses across India
+
+5 active carts with 9 cart items
+
+15 wishlist items
+
+7 banners with festival scheduling
+
+10 hero items for homepage sections
+
+19 grid section items for product blocks
+
+22 user activities for personalization
+
+12 reviews with ratings and images
+
+8 orders with 12 order items in various states
+
